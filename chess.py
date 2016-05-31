@@ -19,14 +19,14 @@ class Unit(object):
             rowNum: row number, starting from 0
             colNum: column number, starting from 0
         """
-        self.move(rowNum, colNum)
+        self.setPos(rowNum, colNum)
     
-    def move(self, rowNum, colNum):
+    def setPos(self, rowNum, colNum):
         """
             rowNum: row number, starting from 0
             colNum: column number, starting from 0
             
-            moves the unit to the position
+            sets unit position
         """
         self.rowNum = rowNum
         self.colNum = colNum
