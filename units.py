@@ -4,15 +4,20 @@
 class Unit(object):
     name = ''
     symbol = ''
+    id = None
     moveSteps = ()
     moveMaxLength = 1
     classByName = {}
     classBySymbol = {}
+    classList = []
 
     @classmethod
     def registerClass(myCls, cls):
         myCls.classByName[cls.name] = cls
         myCls.classBySymbol[cls.symbol] = cls
+        
+        cls.id = len(myCls.classList)
+        myCls.classList.append(cls)
 
     def __init__(self, rowNum, colNum):
         """
