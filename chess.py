@@ -26,7 +26,10 @@ class Unit(object):
         """
         return (self.col, self.row)
 
+    def canAttackPos(self, col, row):
+        raise NotImplementedError
 
+    canAttackUnit = lambda self, other: self.canAttackPos(other.col, other.row)
 
 
 class King(Unit):
@@ -43,6 +46,12 @@ class King(Unit):
     )
     moveMaxLength = 1
 
+    canAttackPos = lambda self, col, row: 1 == max(
+        abs(col - self.col),
+        abs(row - self.row),
+    )
+
+
 class Queen(Unit):
     name = 'queen'
     moveSteps = (
@@ -57,6 +66,12 @@ class Queen(Unit):
     )
     moveMaxLength = -1
 
+    canAttackPos = lambda self, col, row: \
+        col == self.col or row == self.row or \
+        abs(col - self.col) == abs(row - self.row)
+
+
+
 class Bishop(Unit):
     name = 'bishop'
     moveSteps = (
@@ -67,6 +82,10 @@ class Bishop(Unit):
     )
     moveMaxLength = -1
 
+    canAttackPos = lambda self, col, row: \
+        abs(col - self.col) == abs(row - self.row)
+
+
 class Rook(Unit):
     name = 'rook'
     moveSteps = (
@@ -76,6 +95,10 @@ class Rook(Unit):
         (1, 0),
     )
     moveMaxLength = -1
+
+    canAttackPos = lambda self, col, row: \
+        col == self.col or row == self.row
+
 
 class Knight(Unit):
     name = 'knight'
@@ -91,8 +114,11 @@ class Knight(Unit):
     )
     moveMaxLength = 1
     
-
-
+    canAttackPos = lambda self, col, row: \
+        {1, 2} == {
+            abs(col - self.col),
+            abs(row - self.row),
+        }
 
 
 
