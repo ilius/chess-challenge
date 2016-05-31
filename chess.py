@@ -43,7 +43,25 @@ class Unit(object):
 
     canAttackUnit = lambda self, other: self.canAttackPos(other.rowNum, other.colNum)
 
+    def canPutOnBoard(self, board):
+        """
+            board: a dict { (rowNum, colNum) => unitSymbol }
+                we use dict instead of 2-dimentional array bcoz the number of units on board
+                is probably small comparing to the whole table (N*M)
+                should we use numpy matrix? FIXME
+            
+            return True iff this unit can be added to the board
+                without threatening or being threatened by any unit on board
+        """
+        for (rowNum, colNum), symbol in board.items():
+            if self.canAttackPos(rowNum, colNum):
+                return False
+            
+            other = self.classBySymbol[symbol](rowNum, colNum)
+            if other.canAttackUnit(self):
+                return False
 
+        return True
 
 
 @Unit.registerClass
