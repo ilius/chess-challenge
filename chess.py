@@ -14,33 +14,34 @@ class Unit(object):
         myCls.classByName[cls.name] = cls
         myCls.classBySymbol[cls.symbol] = cls
 
-    def __init__(self, colNum, rowNum):
+    def __init__(self, rowNum, colNum):
         """
-            colNum: column number, starting from 0
             rowNum: row number, starting from 0
+            colNum: column number, starting from 0
         """
-        self.move(colNum, rowNum)
+        self.move(rowNum, colNum)
     
-    def move(self, colNum, rowNum):
+    def move(self, rowNum, colNum):
         """
-            colNum: column number, starting from 0
             rowNum: row number, starting from 0
+            colNum: column number, starting from 0
             
             moves the unit to the position
         """
-        self.colNum = colNum
         self.rowNum = rowNum
+        self.colNum = colNum
+
 
     def getPos(self):
         """
             returns the current position as tuple (col, row)
         """
-        return (self.colNum, self.rowNum)
+        return (self.rowNum, self.colNum)
 
-    def canAttackPos(self, colNum, rowNum):
+    def canAttackPos(self, rowNum, colNum):
         raise NotImplementedError
 
-    canAttackUnit = lambda self, other: self.canAttackPos(other.colNum, other.rowNum)
+    canAttackUnit = lambda self, other: self.canAttackPos(other.rowNum, other.colNum)
 
 
 
@@ -61,9 +62,9 @@ class King(Unit):
     )
     moveMaxLength = 1
 
-    canAttackPos = lambda self, colNum, rowNum: 1 == max(
-        abs(colNum - self.colNum),
+    canAttackPos = lambda self, rowNum, colNum: 1 == max(
         abs(rowNum - self.rowNum),
+        abs(colNum - self.colNum),
     )
 
 
@@ -84,9 +85,9 @@ class Queen(Unit):
     )
     moveMaxLength = -1
 
-    canAttackPos = lambda self, colNum, rowNum: \
-        colNum == self.colNum or rowNum == self.rowNum or \
-        abs(colNum - self.colNum) == abs(rowNum - self.rowNum)
+    canAttackPos = lambda self, rowNum, colNum: \
+        rowNum == self.rowNum or colNum == self.colNum or \
+        abs(rowNum - self.rowNum) == abs(colNum - self.colNum)
 
 
 
@@ -102,8 +103,8 @@ class Bishop(Unit):
     )
     moveMaxLength = -1
 
-    canAttackPos = lambda self, colNum, rowNum: \
-        abs(colNum - self.colNum) == abs(rowNum - self.rowNum)
+    canAttackPos = lambda self, rowNum, colNum: \
+        abs(rowNum - self.rowNum) == abs(colNum - self.colNum)
 
 
 @Unit.registerClass
@@ -118,8 +119,8 @@ class Rook(Unit):
     )
     moveMaxLength = -1
 
-    canAttackPos = lambda self, colNum, rowNum: \
-        colNum == self.colNum or rowNum == self.rowNum
+    canAttackPos = lambda self, rowNum, colNum: \
+        rowNum == self.rowNum or colNum == self.colNum
 
 
 @Unit.registerClass
@@ -138,10 +139,10 @@ class Knight(Unit):
     )
     moveMaxLength = 1
     
-    canAttackPos = lambda self, colNum, rowNum: \
+    canAttackPos = lambda self, rowNum, colNum: \
         {1, 2} == {
-            abs(colNum - self.colNum),
             abs(rowNum - self.rowNum),
+            abs(colNum - self.colNum),
         }
 
 
