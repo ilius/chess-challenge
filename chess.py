@@ -126,7 +126,7 @@ class Rook(Unit):
 @Unit.registerClass
 class Knight(Unit):
     name = 'knight'
-    symbol = 'K'
+    symbol = 'N'
     moveSteps = (
         (-2, -1),
         (-2, 1),
