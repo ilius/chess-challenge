@@ -1,9 +1,18 @@
 
+
 class Unit(object):
     name = ''
     symbol = ''
     moveSteps = ()
     moveMaxLength = 1
+    classByName = {}
+    classBySymbol = {}
+
+    @classmethod
+    def registerClass(myCls, cls):
+        myCls.classByName[cls.name] = cls
+        myCls.classBySymbol[cls.symbol] = cls
+
     def __init__(self, col, row):
         """
             col: column index, starting from 0
@@ -32,7 +41,7 @@ class Unit(object):
 
     canAttackUnit = lambda self, other: self.canAttackPos(other.col, other.row)
 
-
+@Unit.registerClass
 class King(Unit):
     name = 'king'
     symbol = 'K'
@@ -54,6 +63,7 @@ class King(Unit):
     )
 
 
+@Unit.registerClass
 class Queen(Unit):
     name = 'queen'
     symbol = 'Q'
@@ -75,6 +85,7 @@ class Queen(Unit):
 
 
 
+@Unit.registerClass
 class Bishop(Unit):
     name = 'bishop'
     symbol = 'B'
@@ -90,6 +101,7 @@ class Bishop(Unit):
         abs(col - self.col) == abs(row - self.row)
 
 
+@Unit.registerClass
 class Rook(Unit):
     name = 'rook'
     symbol = 'R'
@@ -105,6 +117,7 @@ class Rook(Unit):
         col == self.col or row == self.row
 
 
+@Unit.registerClass
 class Knight(Unit):
     name = 'knight'
     symbol = 'K'
@@ -130,7 +143,11 @@ class Knight(Unit):
 
 
 
-
+if __name__=='__main__':
+    from pprint import pprint
+    pprint(Unit.classByName)
+    pprint(Unit.classBySymbol)
+    
 
 
 
