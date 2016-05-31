@@ -144,9 +144,9 @@ class Knight(Unit):
 
 
 if __name__=='__main__':
-    from pprint import pprint
-    pprint(Unit.classByName)
-    pprint(Unit.classBySymbol)
+    from pprint import pprint, pformat
+    print('classByName = %s'%pformat(Unit.classByName))
+    print('classBySymbol = %s'%pformat(Unit.classBySymbol))
     
 
 
