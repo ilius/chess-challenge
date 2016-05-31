@@ -1,6 +1,7 @@
 
 class Unit(object):
     name = ''
+    symbol = ''
     moveSteps = ()
     moveMaxLength = 1
     def __init__(self, col, row):
@@ -34,6 +35,7 @@ class Unit(object):
 
 class King(Unit):
     name = 'king'
+    symbol = 'K'
     moveSteps = (
         (-1, -1),
         (-1, 0),
@@ -54,6 +56,7 @@ class King(Unit):
 
 class Queen(Unit):
     name = 'queen'
+    symbol = 'Q'
     moveSteps = (
         (-1, -1),
         (-1, 0),
@@ -74,6 +77,7 @@ class Queen(Unit):
 
 class Bishop(Unit):
     name = 'bishop'
+    symbol = 'B'
     moveSteps = (
         (-1, -1),
         (-1, 1),
@@ -88,6 +92,7 @@ class Bishop(Unit):
 
 class Rook(Unit):
     name = 'rook'
+    symbol = 'R'
     moveSteps = (
         (-1, 0),
         (0, -1),
@@ -102,6 +107,7 @@ class Rook(Unit):
 
 class Knight(Unit):
     name = 'knight'
+    symbol = 'K'
     moveSteps = (
         (-2, -1),
         (-2, 1),
