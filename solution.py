@@ -51,7 +51,7 @@ def findSolutions(rowCount, colCount, countBySymbol, debug=True):
 
         (rowNum, colNum) = cellPos = divmod(cellNum, colCount)
         for unitId, count in enumerate(stage):
-            if not count:
+            if count < 1:
                 continue
             unitCls = Unit.classList[unitId]
             if cellPos in board:
