@@ -43,6 +43,30 @@ def inputUnitsCount(rowCount, colCount):
         totalCount += count
     return countBySymbol
 
+def formatBoard(board, rowCount, colCount):
+    sepLine = '-' * (colCount * 4 + 1)
+    lines = [sepLine]
+    for rowNum in range(rowCount):
+        lines.append(
+            '| ' + ' | '.join([
+                board.get((rowNum, colNum), ' ')
+                for colNum in range(colCount)
+            ]) + ' |'
+        )
+        lines.append(sepLine)
+    return '\n'.join(lines)
+
+def makeRandomBoard(rowCount, colCount, density=0.5):
+    import random
+    board = {}
+    for rowNum in range(rowCount):
+        for colNum in range(colCount):
+            factor = random.random() / density
+            if factor >= 1:
+                continue
+            index = int(factor * len(Unit.classList))
+            board[(rowNum, colNum)] = Unit.classList[index].symbol
+    return board
 
 def test_inputInt():
     print(inputInt('Enter an integer: '))
@@ -68,6 +92,17 @@ def test_inputUnitsCount(rowCount, colCount):
     for symbol, count in countBySymbol.items():
         print('%s: %s'%(symbol, count))
 
+def test_formatRandomBoard(density=0.5):
+    while True:
+        rowCount = inputInt('Number of rows: ', minimum=2, default=0)
+        if rowCount==0:
+            break
+        colCount = inputInt('Number of columns: ', minimum=2)
+        board = makeRandomBoard(rowCount, colCount, density)
+        print(formatBoard(board, rowCount, colCount))
+        print('\n\n')
+
 if __name__ == '__main__':
     #test_inputInt()
-    test_inputUnitsCount(5, 6)
+    #test_inputUnitsCount(5, 6)
+    test_formatRandomBoard(density=0.5)
