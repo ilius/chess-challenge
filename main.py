@@ -76,8 +76,12 @@ def inputProblem():
         rowCount = int(sys.argv[1])
         colCount = int(sys.argv[2])
         countBySymbol = {}
+        print('Number of rows: %s'%rowCount)
+        print('Number of columns: %s'%colCount)
+        print()
         for index, cls in enumerate(Unit.classList):
             countBySymbol[cls.symbol] = int(sys.argv[3+index])
+            print('Number of %ss: %s'%(cls.name.capitalize(), countBySymbol[cls.symbol]))
     else:
         rowCount = inputInt('Number of rows: ', minimum=2)
         colCount = inputInt('Number of columns: ', minimum=2)
