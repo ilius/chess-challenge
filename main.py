@@ -128,8 +128,63 @@ def test_formatRandomBoard(density=0.5):
         print(formatBoard(board, rowCount, colCount))
         print('\n\n')
 
+
+def test_findSolutions_compareOutput():
+    from solution import findSolutions_S, findSolutions_R, findSolutions_Q
+    rowCount, colCount, countBySymbol = inputProblem()
+
+    solutionSetList = []
+    # solutionSetList is a list of sets, one set for each implementation
+    for func in (
+        findSolutions_R,
+        findSolutions_Q,
+        findSolutions_S,
+    ):
+        solutionSet = set()
+        for board in func(rowCount, colCount, countBySymbol):
+            boardS = str(board)
+            assert boardS not in solutionSet
+            solutionSet.add(boardS)
+        solutionSetList.append(solutionSet)
+
+    assert solutionSetList[1:] == solutionSetList[:-1]  # all items equal
+    print('Number of solutions: %s'%len(solutionSetList[0]))
+
+
+def test_findSolutions_compareTime():
+    from time import time
+    from solution import findSolutions_S, findSolutions_R, findSolutions_Q
+
+    rowCount, colCount, countBySymbol = inputProblem()
+
+    timeList = []
+
+    for func in (
+        findSolutions_S,
+        findSolutions_R,
+        findSolutions_Q,
+        findSolutions_S,
+        findSolutions_R,
+        findSolutions_Q,
+    ):
+        t0 = time()
+        for board in func(rowCount, colCount, countBySymbol):
+            pass
+        delta = time() - t0
+        timeList.append(delta)
+        print('%.4f seconds'%delta)
+
+
+    #print('Running time of implementations:')
+    #for delta in timeList:
+    #    print('%.4f seconds'%delta)
+
+
+
 if __name__ == '__main__':
     #test_inputInt()
     #test_inputUnitsCount(5, 6)
     #test_formatRandomBoard(density=0.5)
+    #test_findSolutions_compareTime()
+    #test_findSolutions_compareOutput()
     main()
