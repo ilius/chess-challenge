@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 from units import Unit
+from solution import findSolutions
 
 def inputInt(prompt, default=None, minimum=None, maximum=None):
     while True:
@@ -68,6 +69,17 @@ def makeRandomBoard(rowCount, colCount, density=0.5):
             board[(rowNum, colNum)] = Unit.classList[index].symbol
     return board
 
+def main():
+    rowCount = inputInt('Number of rows: ', minimum=2)
+    colCount = inputInt('Number of columns: ', minimum=2)
+    print()
+    countBySymbol = inputUnitsCount(rowCount, colCount)
+    print('Found Configurations:\n')
+    for board in findSolutions(rowCount, colCount, countBySymbol):
+        print(formatBoard(board, rowCount, colCount))
+        input('Press enter to see the next')
+
+
 def test_inputInt():
     print(inputInt('Enter an integer: '))
     print(inputInt('Enter an integer (default=0): ', default=0))
@@ -105,4 +117,5 @@ def test_formatRandomBoard(density=0.5):
 if __name__ == '__main__':
     #test_inputInt()
     #test_inputUnitsCount(5, 6)
-    test_formatRandomBoard(density=0.5)
+    #test_formatRandomBoard(density=0.5)
+    main()
