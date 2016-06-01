@@ -39,11 +39,11 @@ class Unit(object):
         """return the current position as tuple (col, row)"""
         return (self.rowNum, self.colNum)
 
-    def canAttackPos(self, rowNum, colNum):
+    def attacksPos(self, rowNum, colNum):
         raise NotImplementedError
 
-    def canAttackUnit(self, other):
-        return self.canAttackPos(other.rowNum, other.colNum)
+    def attacksUnit(self, other):
+        return self.attacksPos(other.rowNum, other.colNum)
 
     def canPutOnBoard(self, board):
         """check if this unit can be added to the board without threatening
@@ -56,11 +56,11 @@ class Unit(object):
             should we use numpy matrix? FIXME
         """
         for (rowNum, colNum), symbol in board.items():
-            if self.canAttackPos(rowNum, colNum):
+            if self.attacksPos(rowNum, colNum):
                 return False
 
             other = self.classBySymbol[symbol](rowNum, colNum)
-            if other.canAttackUnit(self):
+            if other.attacksUnit(self):
                 return False
 
         return True
@@ -82,7 +82,7 @@ class King(Unit):
     )
     moveMaxLength = 1
 
-    def canAttackPos(self, rowNum, colNum):
+    def attacksPos(self, rowNum, colNum):
         return 1 == max(
             abs(rowNum - self.rowNum),
             abs(colNum - self.colNum),
@@ -105,7 +105,7 @@ class Queen(Unit):
     )
     moveMaxLength = -1
 
-    def canAttackPos(self, rowNum, colNum):
+    def attacksPos(self, rowNum, colNum):
         return rowNum == self.rowNum or colNum == self.colNum or \
             abs(rowNum - self.rowNum) == abs(colNum - self.colNum)
 
@@ -122,7 +122,7 @@ class Bishop(Unit):
     )
     moveMaxLength = -1
 
-    def canAttackPos(self, rowNum, colNum):
+    def attacksPos(self, rowNum, colNum):
         return abs(rowNum - self.rowNum) == abs(colNum - self.colNum)
 
 
@@ -138,7 +138,7 @@ class Rook(Unit):
     )
     moveMaxLength = -1
 
-    def canAttackPos(self, rowNum, colNum):
+    def attacksPos(self, rowNum, colNum):
         return rowNum == self.rowNum or colNum == self.colNum
 
 
@@ -158,7 +158,7 @@ class Knight(Unit):
     )
     moveMaxLength = 1
 
-    def canAttackPos(self, rowNum, colNum):
+    def attacksPos(self, rowNum, colNum):
         return {1, 2} == {
             abs(rowNum - self.rowNum),
             abs(colNum - self.colNum),
