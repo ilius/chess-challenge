@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 
+import sys
+
 from units import Unit
 from solution import findSolutions
 
@@ -70,10 +72,17 @@ def makeRandomBoard(rowCount, colCount, density=0.5):
     return board
 
 def inputProblem():
-    rowCount = inputInt('Number of rows: ', minimum=2)
-    colCount = inputInt('Number of columns: ', minimum=2)
-    print()
-    countBySymbol = inputUnitsCount(rowCount, colCount)
+    if len(sys.argv) == 3 + len(Unit.classList):
+        rowCount = int(sys.argv[1])
+        colCount = int(sys.argv[2])
+        countBySymbol = {}
+        for index, cls in enumerate(Unit.classList):
+            countBySymbol[cls.symbol] = int(sys.argv[3+index])
+    else:
+        rowCount = inputInt('Number of rows: ', minimum=2)
+        colCount = inputInt('Number of columns: ', minimum=2)
+        print()
+        countBySymbol = inputUnitsCount(rowCount, colCount)
 
     return rowCount, colCount, countBySymbol
 
