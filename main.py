@@ -150,9 +150,9 @@ def test_findSolutions_compareOutput():
             assert boardTuple not in solutionSet
             solutionSet.add(boardTuple)
         solutionSetList.append(solutionSet)
+        print('Number of solutions: %s  (%s)'%(len(solutionSet), func))
 
     assert solutionSetList[1:] == solutionSetList[:-1]  # all items equal
-    print('Number of solutions: %s'%len(solutionSetList[0]))
 
 
 def test_findSolutions_compareTime():
@@ -176,7 +176,7 @@ def test_findSolutions_compareTime():
             pass
         delta = time() - t0
         timeList.append(delta)
-        print('%.4f seconds'%delta)
+        print('%.4f seconds   (%s)'%(delta, func))
 
 
     #print('Running time of implementations:')
