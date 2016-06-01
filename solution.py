@@ -24,7 +24,7 @@ def findSolutions(rowCount, colCount, countBySymbol):
     #       computation
     #       To decode cellNum: rowNum, colNum = divmod(cellNum, colCount)
     cellCount = rowCount * colCount
-    stage = (
+    stage = tuple(
         countBySymbol.get(cls.symbol, 0)
         for cls in Unit.classList
     )
