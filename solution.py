@@ -26,17 +26,17 @@ def findSolutions(rowCount, colCount, symbolsCount):
         for cls in Unit.classList
     )
     todo = [(
-        {}, ## initial board
-        stage,## initial stage
-        0,## first cell (top-left corner)
+        {}, # initial board
+        stage, # initial stage
+        0, # first cell (top-left corner)
     )]
     
-    while todo:## stack not empty
+    while todo: # stack not empty
         board, stage, startCellNum = todo.pop()
         stageSize = sum(stage)
 
         if startCellNum < cellCount - stageSize:
-            ## we can leave cell empty, skip to next one
+            # we can leave cell empty, skip to next one
             todo.append((
                 board,
                 stage,
@@ -62,7 +62,7 @@ def findSolutions(rowCount, colCount, symbolsCount):
                 newStage[unitId] -= 1
                 assert newStage[unitId] >= 0
 
-                if not any(newStage):## newStage is empty, newBoard is complete
+                if not any(newStage): # newStage is empty, newBoard is complete
                     yield newBoard
 
                 if cellNum < cellCount - 1:
