@@ -28,7 +28,7 @@ class Unit(object):
 
     def setPos(self, rowNum, colNum):
         """set position of unit
-        
+
         rowNum: row number, starting from 0
         colNum: column number, starting from 0
         """
@@ -66,12 +66,11 @@ class Unit(object):
 
         return False
 
-
     def canPutOnBoard(self, board):
         """check if this unit can be added to the board without threatening
             or being threatened by any unit on board
             return True if it can, False otherwise
-        
+
         board: a dict { (rowNum, colNum) => unitSymbol }
             we use dict instead of 2-dimentional array bcoz the number of units
             on board is probably small comparing to the whole table (N*M)
