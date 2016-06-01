@@ -27,6 +27,38 @@ def inputInt(prompt, default=None, minimum=None, maximum=None):
 
         return value
 
+def inputUnitsCount(rowCount, colCount):
+    cellCount = rowCount * colCount
+    countBySymbol = {}
+    totalCount = 0
+    for cls in Unit.classList:
+        pluralName = cls.name.capitalize() + 's'
+        count = inputInt(
+            'Number of %s: '%pluralName,
+            default=0,
+            minimum=0,
+            maximum=cellCount-totalCount,
+        )
+        countBySymbol[cls.symbol] = count
+        totalCount += count
+    return countBySymbol
+
+
+def test_inputUnitsCount(rowCount, colCount):
+    countBySymbol = inputUnitsCount(rowCount, colCount)
+    assert set(countBySymbol.keys()) == set(Unit.classBySymbol.keys())
+    for count in countBySymbol.values():
+        assert isinstance(count, int)
+        assert count >= 0
+
+    assert sum(countBySymbol.values()) <= rowCount * colCount
+
+    for symbol, count in countBySymbol.items():
+        print('%s: %s'%(symbol, count))
+
+
+
+
 def test_inputInt():
     print(inputInt('Enter an integer: '))
     print(inputInt('Enter an integer (default=0): ', default=0))
@@ -40,4 +72,5 @@ def test_inputInt():
     ))
 
 if __name__ == '__main__':
-    test_inputInt()
+    #test_inputInt()
+    test_inputUnitsCount(5, 6)
