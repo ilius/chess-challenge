@@ -35,45 +35,44 @@ def findSolutions(rowCount, colCount, countBySymbol, debug=True):
     )]
 
     while todo:  # stack not empty
-        board, stage, startCellNum = todo.pop()
+        board, stage, cellNum = todo.pop()
         stageSize = sum(stage)
 
         if debug:
-            print('len(todo)=%s, len(board)=%s, stage=%s, startCellNum=%s'%(len(todo), len(board), str(stage), startCellNum))
+            print('len(todo)=%s, len(board)=%s, stage=%s, cellNum=%s'%(len(todo), len(board), str(stage), cellNum))
 
-        if startCellNum < cellCount - stageSize:
+        if cellNum < cellCount - stageSize:
             # we can leave cell empty, skip to next one
             todo.append((
                 board,
                 stage,
-                startCellNum + 1,
+                cellNum + 1,
             ))
 
-        for cellNum in range(startCellNum, cellCount):
-            (rowNum, colNum) = cellPos = divmod(cellNum, colCount)
-            for unitId, count in enumerate(stage):
-                if not count:
-                    continue
-                unitCls = Unit.classList[unitId]
-                if cellPos in board:
-                    continue
-                unit = unitCls(rowNum, colNum)
-                if not unit.canPutOnBoard(board):
-                    continue
+        (rowNum, colNum) = cellPos = divmod(cellNum, colCount)
+        for unitId, count in enumerate(stage):
+            if not count:
+                continue
+            unitCls = Unit.classList[unitId]
+            if cellPos in board:
+                continue
+            unit = unitCls(rowNum, colNum)
+            if not unit.canPutOnBoard(board):
+                continue
 
-                newBoard = board.copy()
-                newBoard[cellPos] = unit.symbol
+            newBoard = board.copy()
+            newBoard[cellPos] = unit.symbol
 
-                newStage = list(stage)
-                newStage[unitId] -= 1
-                assert newStage[unitId] >= 0
+            newStage = list(stage)
+            newStage[unitId] -= 1
+            assert newStage[unitId] >= 0
 
-                if not any(newStage):  # newStage empty, newBoard complete
-                    yield newBoard
+            if not any(newStage):  # newStage empty, newBoard complete
+                yield newBoard
 
-                if cellNum < cellCount - 1:
-                    todo.append((
-                        newBoard,
-                        tuple(newStage),
-                        cellNum + 1,
-                    ))
+            if cellNum < cellCount - (stageSize - 1):
+                todo.append((
+                    newBoard,
+                    tuple(newStage),
+                    cellNum + 1,
+                ))
