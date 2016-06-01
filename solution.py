@@ -104,13 +104,15 @@ def _R_low(rowCount, colCount, board, stage, cellNum):
         )
 
     (rowNum, colNum) = cellPos = divmod(cellNum, colCount)
+    if Unit.posAttckedByBoard(rowNum, colNum, board):
+        return
     for unitId, count in enumerate(stage):
         if count < 1:
             continue
         if cellPos in board:
             continue
         unit = Unit.classList[unitId](rowNum, colNum)
-        if not unit.canPutOnBoard(board):
+        if unit.attacksBoard(board):
             continue
 
         newBoard = board.copy()
@@ -208,13 +210,15 @@ def findSolutions_Q(rowCount, colCount, countBySymbol, debug=False):
             ))
 
         (rowNum, colNum) = cellPos = divmod(cellNum, colCount)
+        if Unit.posAttckedByBoard(rowNum, colNum, board):
+            continue
         for unitId, count in enumerate(stage):
             if count < 1:
                 continue
             if cellPos in board:
                 continue
             unit = Unit.classList[unitId](rowNum, colNum)
-            if not unit.canPutOnBoard(board):
+            if unit.attacksBoard(board):
                 continue
 
             newBoard = board.copy()
