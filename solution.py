@@ -2,7 +2,7 @@
 from units import Unit
 
 
-def findSolutions_S(rowCount, colCount, countBySymbol, debug=False):
+def findSolutions_S(rowCount, colCount, countBySymbol):
     """find and iterate over solution boards, implemented with Stack
     
     rowCount: int, number or rows
@@ -37,9 +37,6 @@ def findSolutions_S(rowCount, colCount, countBySymbol, debug=False):
     while todo:  # stack not empty
         board, stage, cellNum = todo.pop()
         stageSize = sum(stage)
-
-        if debug:
-            print('len(todo)=%s, len(board)=%s, stage=%s, cellNum=%s'%(len(todo), len(board), str(stage), cellNum))
 
         if cellNum < cellCount - stageSize:
             # we can leave cell empty, skip to next one
@@ -160,7 +157,7 @@ def findSolutions_R(rowCount, colCount, countBySymbol):
     )
 
 
-def findSolutions_Q(rowCount, colCount, countBySymbol, debug=False):
+def findSolutions_Q(rowCount, colCount, countBySymbol):
     """find and iterate over solution boards, implemented with Queue
     
     rowCount: int, number or rows
@@ -197,9 +194,6 @@ def findSolutions_Q(rowCount, colCount, countBySymbol, debug=False):
     while not todo.empty():  # queue not empty
         board, stage, cellNum = todo.get()
         stageSize = sum(stage)
-
-        if debug:
-            print('len(todo)=%s, len(board)=%s, stage=%s, cellNum=%s'%(todo.qsize(), len(board), str(stage), cellNum))
 
         if cellNum < cellCount - stageSize:
             # we can leave cell empty, skip to next one
