@@ -21,24 +21,24 @@ class Unit(object):
 
     def __init__(self, rowNum, colNum):
         """
-            rowNum: row number, starting from 0
-            colNum: column number, starting from 0
+        rowNum: row number, starting from 0
+        colNum: column number, starting from 0
         """
         self.setPos(rowNum, colNum)
 
     def setPos(self, rowNum, colNum):
         """
-            rowNum: row number, starting from 0
-            colNum: column number, starting from 0
+        rowNum: row number, starting from 0
+        colNum: column number, starting from 0
 
-            sets unit position
+        sets unit position
         """
         self.rowNum = rowNum
         self.colNum = colNum
 
     def getPos(self):
         """
-            returns the current position as tuple (col, row)
+        returns the current position as tuple (col, row)
         """
         return (self.rowNum, self.colNum)
 
@@ -50,14 +50,13 @@ class Unit(object):
 
     def canPutOnBoard(self, board):
         """
-            board: a dict { (rowNum, colNum) => unitSymbol }
-                we use dict instead of 2-dimentional array bcoz the number of
-                    units on board is probably small comparing to the whole
-                    table (N*M)
-                should we use numpy matrix? FIXME
+        board: a dict { (rowNum, colNum) => unitSymbol }
+            we use dict instead of 2-dimentional array bcoz the number of units
+            on board is probably small comparing to the whole table (N*M)
+            should we use numpy matrix? FIXME
 
-            return True iff this unit can be added to the board
-                without threatening or being threatened by any unit on board
+        return True iff this unit can be added to the board
+            without threatening or being threatened by any unit on board
         """
         for (rowNum, colNum), symbol in board.items():
             if self.canAttackPos(rowNum, colNum):
