@@ -67,8 +67,9 @@ def findSolutions(rowCount, colCount, countBySymbol, debug=True):
             newStage[unitId] -= 1
             assert newStage[unitId] >= 0
 
-            if not any(newStage):  # newStage empty, newBoard complete
+            if stageSize <= 1:  # newStage empty, newBoard complete
                 yield newBoard
+                continue
 
             if cellNum < cellCount - (stageSize - 1):
                 todo.append((
