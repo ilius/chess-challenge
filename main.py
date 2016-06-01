@@ -44,21 +44,6 @@ def inputUnitsCount(rowCount, colCount):
     return countBySymbol
 
 
-def test_inputUnitsCount(rowCount, colCount):
-    countBySymbol = inputUnitsCount(rowCount, colCount)
-    assert set(countBySymbol.keys()) == set(Unit.classBySymbol.keys())
-    for count in countBySymbol.values():
-        assert isinstance(count, int)
-        assert count >= 0
-
-    assert sum(countBySymbol.values()) <= rowCount * colCount
-
-    for symbol, count in countBySymbol.items():
-        print('%s: %s'%(symbol, count))
-
-
-
-
 def test_inputInt():
     print(inputInt('Enter an integer: '))
     print(inputInt('Enter an integer (default=0): ', default=0))
@@ -70,6 +55,18 @@ def test_inputInt():
         minimum=0,
         maximum=99,
     ))
+
+def test_inputUnitsCount(rowCount, colCount):
+    countBySymbol = inputUnitsCount(rowCount, colCount)
+    assert set(countBySymbol.keys()) == set(Unit.classBySymbol.keys())
+    for count in countBySymbol.values():
+        assert isinstance(count, int)
+        assert count >= 0
+
+    assert sum(countBySymbol.values()) <= rowCount * colCount
+
+    for symbol, count in countBySymbol.items():
+        print('%s: %s'%(symbol, count))
 
 if __name__ == '__main__':
     #test_inputInt()
