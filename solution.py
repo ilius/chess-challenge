@@ -2,7 +2,7 @@
 from units import Unit
 
 
-def findSolutions_S(rowCount, colCount, countBySymbol, debug=True):
+def findSolutions_S(rowCount, colCount, countBySymbol, debug=False):
     """find and iterate over solution boards, implemented with Stack
     
     rowCount: int, number or rows
