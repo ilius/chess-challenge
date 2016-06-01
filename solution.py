@@ -3,7 +3,8 @@ from units import Unit
 
 
 def findSolutions(rowCount, colCount, symbolsCount):
-    """
+    """find and iterate over solution boards
+    
     rowCount: int, number or rows
     colCount: int, number of columns
     symbolsCount: dict of { unitSymbol => count }
