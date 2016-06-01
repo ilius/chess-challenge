@@ -4,12 +4,12 @@ from units import Unit
 
 def findSolutions(rowCount, colCount, symbolsCount):
     """
-        rowCount: int, number or rows
-        colCount: int, number of columns
-        symbolsCount: dict of { unitSymbol => count }
+    rowCount: int, number or rows
+    colCount: int, number of columns
+    symbolsCount: dict of { unitSymbol => count }
 
-        this is a generator, yields a completed `board` each time
-        where `board` is a dict of {(rowNum, colNum) => unitSymbol}
+    this is a generator, yields a completed `board` each time
+    where `board` is a dict of {(rowNum, colNum) => unitSymbol}
     """
     # `todo` is a stack (we use .append, and .pop)
     # each item is a tuple of (board, stage, cellNum)
