@@ -4,7 +4,7 @@ from units import Unit
 
 def findSolutions_S(rowCount, colCount, countBySymbol):
     """find and iterate over solution boards, implemented with Stack
-    
+
     rowCount: int, number or rows
     colCount: int, number of columns
     countBySymbol: dict of { unitSymbol => count }
@@ -159,7 +159,7 @@ def findSolutions_R(rowCount, colCount, countBySymbol):
 
 def findSolutions_Q(rowCount, colCount, countBySymbol):
     """find and iterate over solution boards, implemented with Queue
-    
+
     rowCount: int, number or rows
     colCount: int, number of columns
     countBySymbol: dict of { unitSymbol => count }
@@ -232,7 +232,6 @@ def findSolutions_Q(rowCount, colCount, countBySymbol):
                     tuple(newStage),
                     cellNum + 1,
                 ))
-
 
 
 findSolutions = findSolutions_S
