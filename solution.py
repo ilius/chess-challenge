@@ -33,6 +33,15 @@ def findSolutions(rowCount, colCount, symbolsCount):
     
     while todo:## stack not empty
         board, stage, startCellNum = todo.pop()
+        stageSize = sum(stage)
+
+        if startCellNum < cellCount - stageSize:
+            ## we can leave cell empty, skip to next one
+            todo.append((
+                board,
+                stage,
+                startCellNum + 1,
+            ))
 
         for cellNum in range(startCellNum, cellCount):
             (rowNum, colNum) = cellPos = divmod(cellNum, colCount)
