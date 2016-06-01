@@ -50,13 +50,15 @@ def findSolutions_S(rowCount, colCount, countBySymbol, debug=False):
             ))
 
         (rowNum, colNum) = cellPos = divmod(cellNum, colCount)
+        if Unit.posAttckedByBoard(rowNum, colNum, board):
+            continue
         for unitId, count in enumerate(stage):
             if count < 1:
                 continue
             if cellPos in board:
                 continue
             unit = Unit.classList[unitId](rowNum, colNum)
-            if not unit.canPutOnBoard(board):
+            if unit.attacksBoard(board):
                 continue
 
             newBoard = board.copy()
