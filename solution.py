@@ -2,12 +2,12 @@
 from units import Unit
 
 
-def findSolutions(rowCount, colCount, symbolsCount):
+def findSolutions(rowCount, colCount, countBySymbol):
     """find and iterate over solution boards
     
     rowCount: int, number or rows
     colCount: int, number of columns
-    symbolsCount: dict of { unitSymbol => count }
+    countBySymbol: dict of { unitSymbol => count }
 
     this is a generator, yields a completed `board` each time
     where `board` is a dict of {(rowNum, colNum) => unitSymbol}
@@ -25,7 +25,7 @@ def findSolutions(rowCount, colCount, symbolsCount):
     #       To decode cellNum: rowNum, colNum = divmod(cellNum, colCount)
     cellCount = rowCount * colCount
     stage = (
-        symbolsCount.get(cls.symbol, 0)
+        countBySymbol.get(cls.symbol, 0)
         for cls in Unit.classList
     )
     todo = [(
