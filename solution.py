@@ -53,10 +53,9 @@ def findSolutions_S(rowCount, colCount, countBySymbol, debug=False):
         for unitId, count in enumerate(stage):
             if count < 1:
                 continue
-            unitCls = Unit.classList[unitId]
             if cellPos in board:
                 continue
-            unit = unitCls(rowNum, colNum)
+            unit = Unit.classList[unitId](rowNum, colNum)
             if not unit.canPutOnBoard(board):
                 continue
 
@@ -106,10 +105,9 @@ def _R_low(rowCount, colCount, board, stage, cellNum):
     for unitId, count in enumerate(stage):
         if count < 1:
             continue
-        unitCls = Unit.classList[unitId]
         if cellPos in board:
             continue
-        unit = unitCls(rowNum, colNum)
+        unit = Unit.classList[unitId](rowNum, colNum)
         if not unit.canPutOnBoard(board):
             continue
 
@@ -211,10 +209,9 @@ def findSolutions_Q(rowCount, colCount, countBySymbol, debug=False):
         for unitId, count in enumerate(stage):
             if count < 1:
                 continue
-            unitCls = Unit.classList[unitId]
             if cellPos in board:
                 continue
-            unit = unitCls(rowNum, colNum)
+            unit = Unit.classList[unitId](rowNum, colNum)
             if not unit.canPutOnBoard(board):
                 continue
 
