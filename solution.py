@@ -2,8 +2,8 @@
 from units import Unit
 
 
-def findSolutions(rowCount, colCount, countBySymbol, debug=True):
-    """find and iterate over solution boards
+def findSolutions_S(rowCount, colCount, countBySymbol, debug=True):
+    """find and iterate over solution boards, implemented with Stack
     
     rowCount: int, number or rows
     colCount: int, number of columns
@@ -77,3 +77,5 @@ def findSolutions(rowCount, colCount, countBySymbol, debug=True):
                     tuple(newStage),
                     cellNum + 1,
                 ))
+
+findSolutions = findSolutions_S
