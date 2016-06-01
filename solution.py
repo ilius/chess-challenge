@@ -2,7 +2,7 @@
 from units import Unit
 
 
-def findSolutions(rowCount, colCount, countBySymbol):
+def findSolutions(rowCount, colCount, countBySymbol, debug=True):
     """find and iterate over solution boards
     
     rowCount: int, number or rows
@@ -37,6 +37,9 @@ def findSolutions(rowCount, colCount, countBySymbol):
     while todo:  # stack not empty
         board, stage, startCellNum = todo.pop()
         stageSize = sum(stage)
+
+        if debug:
+            print('len(todo)=%s, len(board)=%s, stage=%s, startCellNum=%s'%(len(todo), len(board), str(stage), startCellNum))
 
         if startCellNum < cellCount - stageSize:
             # we can leave cell empty, skip to next one
