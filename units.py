@@ -45,6 +45,28 @@ class Unit(object):
     def attacksUnit(self, other):
         return self.attacksPos(other.rowNum, other.colNum)
 
+    def attacksBoard(self, board):
+        """check if this unit can attck (threatens) any unit on board
+            return True if it can, False otherwise
+
+        board: a dict { (rowNum, colNum) => unitSymbol }
+        """
+        for rowNum, colNum in board.keys():
+            if self.attacksPos(rowNum, colNum):
+                return True
+
+        return False
+
+    @classmethod
+    def posAttckedByBoard(cls, rowNum, colNum, board):
+        for (bRowNum, bColNum), symbol in board.items():
+            other = cls.classBySymbol[symbol](bRowNum, bColNum)
+            if other.attacksPos(rowNum, colNum):
+                return True
+
+        return False
+
+
     def canPutOnBoard(self, board):
         """check if this unit can be added to the board without threatening
             or being threatened by any unit on board
