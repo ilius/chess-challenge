@@ -7,18 +7,20 @@ def findSolutions(rowCount, colCount, symbolsCount):
         rowCount: int, number or rows
         colCount: int, number of columns
         symbolsCount: dict of { unitSymbol => count }
-        
+
         this is a generator, yields a completed `board` each time
         where `board` is a dict of {(rowNum, colNum) => unitSymbol}
     """
-    # `todo` is a stack (we use .append, and .pop), each item is a tuple of (board, stage, cellNum)
+    # `todo` is a stack (we use .append, and .pop)
+    # each item is a tuple of (board, stage, cellNum)
     #   `board` is a dict of {(rowNum, colNum) => unitSymbol}
-    #   `stage` is a tuple containing count or each unit type
-    #       stage == (kingCount, queenCount, bishopCount, rookCount, knightCount)
+    #   `stage` is a tuple containing count or each unit type:
+    #       (kingCount, queenCount, bishopCount, rookCount, knightCount)
     #   `cellNum` is an int resulting from `rowNum * colCount + colNum`
     #       representing the next cell that we want to check
-    #       and we don't want any unit to put before this cell on the current board
-    #       this way we avoid giving duplicate solutions and extra computation
+    #       and we don't want any unit to put before this cell on the current
+    #       board, this way we avoid giving duplicate solutions and extra
+    #       computation
     #       To decode cellNum: rowNum, colNum = divmod(cellNum, colCount)
     cellCount = rowCount * colCount
     stage = (
@@ -26,12 +28,12 @@ def findSolutions(rowCount, colCount, symbolsCount):
         for cls in Unit.classList
     )
     todo = [(
-        {}, # initial board
-        stage, # initial stage
-        0, # first cell (top-left corner)
+        {},     # initial board
+        stage,  # initial stage
+        0,      # first cell (top-left corner)
     )]
-    
-    while todo: # stack not empty
+
+    while todo:  # stack not empty
         board, stage, startCellNum = todo.pop()
         stageSize = sum(stage)
 
@@ -62,7 +64,7 @@ def findSolutions(rowCount, colCount, symbolsCount):
                 newStage[unitId] -= 1
                 assert newStage[unitId] >= 0
 
-                if not any(newStage): # newStage is empty, newBoard is complete
+                if not any(newStage):  # newStage empty, newBoard complete
                     yield newBoard
 
                 if cellNum < cellCount - 1:
@@ -71,11 +73,3 @@ def findSolutions(rowCount, colCount, symbolsCount):
                         tuple(newStage),
                         cellNum + 1,
                     ))
-            
-    
-    
-
-
-
-
-
