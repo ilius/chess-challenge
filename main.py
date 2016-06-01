@@ -146,9 +146,9 @@ def test_findSolutions_compareOutput():
     ):
         solutionSet = set()
         for board in func(rowCount, colCount, countBySymbol):
-            boardS = str(board)
-            assert boardS not in solutionSet
-            solutionSet.add(boardS)
+            boardTuple = tuple(sorted(board.items()))
+            assert boardTuple not in solutionSet
+            solutionSet.add(boardTuple)
         solutionSetList.append(solutionSet)
 
     assert solutionSetList[1:] == solutionSetList[:-1]  # all items equal
