@@ -69,11 +69,16 @@ def makeRandomBoard(rowCount, colCount, density=0.5):
             board[(rowNum, colNum)] = Unit.classList[index].symbol
     return board
 
-def main():
+def inputProblem():
     rowCount = inputInt('Number of rows: ', minimum=2)
     colCount = inputInt('Number of columns: ', minimum=2)
     print()
     countBySymbol = inputUnitsCount(rowCount, colCount)
+
+    return rowCount, colCount, countBySymbol
+
+def main():
+    rowCount, colCount, countBySymbol = inputProblem()
     print('Found Configurations:\n')
     for board in findSolutions(rowCount, colCount, countBySymbol):
         print(formatBoard(board, rowCount, colCount))
