@@ -131,7 +131,7 @@ def input_problem():
     return row_count, col_count, count_by_symbol
 
 
-def main():
+def show_all_confs():
     """
     ask the board size and units count
     calculate and show all possible unique configuration
@@ -239,4 +239,4 @@ def compare_find_solutions_time():
         print('%.4f seconds   (%s)' % (delta, func))
 
 if __name__ == '__main__':
-    main()
+    show_all_confs()
