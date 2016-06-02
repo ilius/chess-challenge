@@ -9,8 +9,6 @@ class Unit(object):
     name = ''
     symbol = ''
     cid = None
-    move_steps = ()
-    move_max_length = 1
     class_by_name = {}
     class_by_symbol = {}
     class_list = []
@@ -85,17 +83,6 @@ class King(Unit):
     """King unit/piece class"""
     name = 'king'
     symbol = 'K'
-    move_steps = (
-        (-1, -1),
-        (-1, 0),
-        (-1, 1),
-        (0, -1),
-        (0, 1),
-        (1, -1),
-        (1, 0),
-        (1, 1),
-    )
-    move_max_length = 1
 
     def attacks_pos(self, row_num, col_num):
         return max(
@@ -109,17 +96,6 @@ class Queen(Unit):
     """Queen unit/piece class"""
     name = 'queen'
     symbol = 'Q'
-    move_steps = (
-        (-1, -1),
-        (-1, 0),
-        (-1, 1),
-        (0, -1),
-        (0, 1),
-        (1, -1),
-        (1, 0),
-        (1, 1),
-    )
-    move_max_length = -1
 
     def attacks_pos(self, row_num, col_num):
         return row_num == self.row_num or col_num == self.col_num or \
@@ -131,13 +107,6 @@ class Bishop(Unit):
     """Bishop unit/piece class"""
     name = 'bishop'
     symbol = 'B'
-    move_steps = (
-        (-1, -1),
-        (-1, 1),
-        (1, -1),
-        (1, 1),
-    )
-    move_max_length = -1
 
     def attacks_pos(self, row_num, col_num):
         return abs(row_num - self.row_num) == abs(col_num - self.col_num)
@@ -148,13 +117,6 @@ class Rook(Unit):
     """Rook unit/piece class"""
     name = 'rook'
     symbol = 'R'
-    move_steps = (
-        (-1, 0),
-        (0, -1),
-        (0, 1),
-        (1, 0),
-    )
-    move_max_length = -1
 
     def attacks_pos(self, row_num, col_num):
         return row_num == self.row_num or col_num == self.col_num
@@ -165,17 +127,6 @@ class Knight(Unit):
     """Knight unit/piece class"""
     name = 'knight'
     symbol = 'N'
-    move_steps = (
-        (-2, -1),
-        (-2, 1),
-        (-1, -2),
-        (-1, 2),
-        (1, -2),
-        (1, 2),
-        (2, -1),
-        (2, 1),
-    )
-    move_max_length = 1
 
     def attacks_pos(self, row_num, col_num):
         return {1, 2} == {
