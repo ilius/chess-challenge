@@ -40,10 +40,17 @@ def find_solutions_s(row_count, col_count, count_by_symbol):
         stage,  # initial stage
         sum(stage),  # initial stage_size
         0,      # first cell (top-left corner)
+        None,   # last_unit
     )]
 
     while todo:  # stack not empty
-        board, stage, stage_size, cell_num = todo.pop()
+        (
+            board,
+            stage,
+            stage_size,
+            cell_num,
+            last_unit,
+        ) = todo.pop()
 
         if cell_num < cell_count - stage_size:
             # we can leave cell empty, skip to next one
@@ -52,10 +59,13 @@ def find_solutions_s(row_count, col_count, count_by_symbol):
                 stage,
                 stage_size,
                 cell_num + 1,
+                last_unit,
             ))
 
         cell_pos = divmod(cell_num, col_count)
         # cell_pos == (row_num, col_num)
+        if last_unit and last_unit.attacks_pos(*cell_pos):
+            continue
         if Unit.pos_attacked_by_board(cell_pos[0], cell_pos[1], board):
             continue
         for unit_id, count in enumerate(stage):
@@ -83,6 +93,7 @@ def find_solutions_s(row_count, col_count, count_by_symbol):
                     tuple(new_stage),
                     stage_size - 1,
                     cell_num + 1,
+                    unit,  # the new last_unit
                 ))
 
 
