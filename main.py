@@ -12,6 +12,8 @@ from solution import (
     find_solutions_q,
 )
 
+UNIT_SYMBOLS = 'KQBRN'  # must not re-order
+
 
 def input_int(prompt, default=None, minimum=None, maximum=None):
     """
@@ -58,7 +60,8 @@ def input_units_count(row_count, col_count):
     cell_count = row_count * col_count
     count_by_symbol = {}
     total_count = 0
-    for cls in Unit.class_list:
+    for symbol in UNIT_SYMBOLS:
+        cls = Unit.class_by_symbol[symbol]
         plural_name = cls.name.capitalize() + 's'
         count = input_int(
             'Number of %s: ' % plural_name,
@@ -66,7 +69,7 @@ def input_units_count(row_count, col_count):
             minimum=0,
             maximum=cell_count-total_count,
         )
-        count_by_symbol[cls.symbol] = count
+        count_by_symbol[symbol] = count
         total_count += count
     return count_by_symbol
 
@@ -116,7 +119,8 @@ def input_problem():
         print('Number of rows: %s' % row_count)
         print('Number of columns: %s' % col_count)
         print()
-        for index, cls in enumerate(Unit.class_list):
+        for index, symbol in enumerate(UNIT_SYMBOLS):
+            cls = Unit.class_by_symbol[symbol]
             count_by_symbol[cls.symbol] = int(sys.argv[3+index])
             print('Number of %ss: %s' % (
                 cls.name.capitalize(),
