@@ -135,7 +135,24 @@ def input_problem():
     return row_count, col_count, count_by_symbol
 
 
-def show_all_confs():
+def mark_board_under_attack_cells(board, row_count, col_count, symbol='.'):
+    """
+    fill the empty cells that are under attack by other cells,
+    with given symbol
+    return a new board dict
+    """
+    new_board = {}
+    for row_num in range(row_count):
+        for col_num in range(col_count):
+            try:
+                new_board[(row_num, col_num)] = board[(row_num, col_num)]
+            except KeyError:
+                if Unit.pos_attacked_by_board(row_num, col_num, board):
+                    new_board[(row_num, col_num)] = symbol
+    return new_board
+
+
+def show_all_confs(under_attack_symbol=''):
     """
     ask the board size and units count
     calculate and show all possible unique configuration
@@ -143,6 +160,13 @@ def show_all_confs():
     row_count, col_count, count_by_symbol = input_problem()
     print('Found Configurations:\n')
     for board in find_solutions_s(row_count, col_count, count_by_symbol):
+        if under_attack_symbol:
+            board = mark_board_under_attack_cells(
+                board,
+                row_count,
+                col_count,
+                under_attack_symbol,
+            )
         print(format_board(board, row_count, col_count))
         input('Press enter to see the next')
 
