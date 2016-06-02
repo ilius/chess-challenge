@@ -3,20 +3,20 @@
 import sys
 
 from units import Unit
-from solution import findSolutions
+from solution import find_solutions
 
 
-def inputInt(prompt, default=None, minimum=None, maximum=None):
+def input_int(prompt, default=None, minimum=None, maximum=None):
     while True:
-        valueStr = input(prompt).strip()
-        if not valueStr:
+        value_str = input(prompt).strip()
+        if not value_str:
             if default is None:
                 print('Can not leave empty')
                 continue
             else:
                 return default
         try:
-            value = int(valueStr)
+            value = int(value_str)
         except ValueError:
             print('Must enter an integer number')
             continue
@@ -32,87 +32,87 @@ def inputInt(prompt, default=None, minimum=None, maximum=None):
         return value
 
 
-def inputUnitsCount(rowCount, colCount):
-    cellCount = rowCount * colCount
-    countBySymbol = {}
-    totalCount = 0
-    for cls in Unit.classList:
-        pluralName = cls.name.capitalize() + 's'
-        count = inputInt(
-            'Number of %s: ' % pluralName,
+def input_units_count(row_count, col_count):
+    cell_count = row_count * col_count
+    count_by_symbol = {}
+    total_count = 0
+    for cls in Unit.class_list:
+        plural_name = cls.name.capitalize() + 's'
+        count = input_int(
+            'Number of %s: ' % plural_name,
             default=0,
             minimum=0,
-            maximum=cellCount-totalCount,
+            maximum=cell_count-total_count,
         )
-        countBySymbol[cls.symbol] = count
-        totalCount += count
-    return countBySymbol
+        count_by_symbol[cls.symbol] = count
+        total_count += count
+    return count_by_symbol
 
 
-def formatBoard(board, rowCount, colCount):
-    sepLine = '-' * (colCount * 4 + 1)
-    lines = [sepLine]
-    for rowNum in range(rowCount):
+def format_board(board, row_count, col_count):
+    sep_line = '-' * (col_count * 4 + 1)
+    lines = [sep_line]
+    for row_num in range(row_count):
         lines.append(
             '| ' + ' | '.join([
-                board.get((rowNum, colNum), ' ')
-                for colNum in range(colCount)
+                board.get((row_num, col_num), ' ')
+                for col_num in range(col_count)
             ]) + ' |'
         )
-        lines.append(sepLine)
+        lines.append(sep_line)
     return '\n'.join(lines)
 
 
-def makeRandomBoard(rowCount, colCount, density=0.5):
+def make_random_board(row_count, col_count, density=0.5):
     import random
     board = {}
-    for rowNum in range(rowCount):
-        for colNum in range(colCount):
+    for row_num in range(row_count):
+        for col_num in range(col_count):
             factor = random.random() / density
             if factor >= 1:
                 continue
-            index = int(factor * len(Unit.classList))
-            board[(rowNum, colNum)] = Unit.classList[index].symbol
+            index = int(factor * len(Unit.class_list))
+            board[(row_num, col_num)] = Unit.class_list[index].symbol
     return board
 
 
-def inputProblem():
-    if len(sys.argv) == 3 + len(Unit.classList):
-        rowCount = int(sys.argv[1])
-        colCount = int(sys.argv[2])
-        countBySymbol = {}
-        print('Number of rows: %s' % rowCount)
-        print('Number of columns: %s' % colCount)
+def input_problem():
+    if len(sys.argv) == 3 + len(Unit.class_list):
+        row_count = int(sys.argv[1])
+        col_count = int(sys.argv[2])
+        count_by_symbol = {}
+        print('Number of rows: %s' % row_count)
+        print('Number of columns: %s' % col_count)
         print()
-        for index, cls in enumerate(Unit.classList):
-            countBySymbol[cls.symbol] = int(sys.argv[3+index])
+        for index, cls in enumerate(Unit.class_list):
+            count_by_symbol[cls.symbol] = int(sys.argv[3+index])
             print('Number of %ss: %s' % (
                 cls.name.capitalize(),
-                countBySymbol[cls.symbol],
+                count_by_symbol[cls.symbol],
             ))
     else:
-        rowCount = inputInt('Number of rows: ', minimum=2)
-        colCount = inputInt('Number of columns: ', minimum=2)
+        row_count = input_int('Number of rows: ', minimum=2)
+        col_count = input_int('Number of columns: ', minimum=2)
         print()
-        countBySymbol = inputUnitsCount(rowCount, colCount)
+        count_by_symbol = input_units_count(row_count, col_count)
 
-    return rowCount, colCount, countBySymbol
+    return row_count, col_count, count_by_symbol
 
 
 def main():
-    rowCount, colCount, countBySymbol = inputProblem()
+    row_count, col_count, count_by_symbol = input_problem()
     print('Found Configurations:\n')
-    for board in findSolutions(rowCount, colCount, countBySymbol):
-        print(formatBoard(board, rowCount, colCount))
+    for board in find_solutions(row_count, col_count, count_by_symbol):
+        print(format_board(board, row_count, col_count))
         input('Press enter to see the next')
 
 
-def test_inputInt():
-    print(inputInt('Enter an integer: '))
-    print(inputInt('Enter an integer (default=0): ', default=0))
-    print(inputInt('Enter an integer (>= 3): ', minimum=3))
-    print(inputInt('Enter an integer (<= 9): ', maximum=9))
-    print(inputInt(
+def test_input_int():
+    print(input_int('Enter an integer: '))
+    print(input_int('Enter an integer (default=0): ', default=0))
+    print(input_int('Enter an integer (>= 3): ', minimum=3))
+    print(input_int('Enter an integer (<= 9): ', maximum=9))
+    print(input_int(
         'Enter a number (0-99, default 40):',
         default=40,
         minimum=0,
@@ -120,79 +120,79 @@ def test_inputInt():
     ))
 
 
-def test_inputUnitsCount(rowCount, colCount):
-    countBySymbol = inputUnitsCount(rowCount, colCount)
-    assert set(countBySymbol.keys()) == set(Unit.classBySymbol.keys())
-    for count in countBySymbol.values():
+def test_input_units_count(row_count, col_count):
+    count_by_symbol = input_units_count(row_count, col_count)
+    assert set(count_by_symbol.keys()) == set(Unit.class_by_symbol.keys())
+    for count in count_by_symbol.values():
         assert isinstance(count, int)
         assert count >= 0
 
-    assert sum(countBySymbol.values()) <= rowCount * colCount
+    assert sum(count_by_symbol.values()) <= row_count * col_count
 
-    for symbol, count in countBySymbol.items():
+    for symbol, count in count_by_symbol.items():
         print('%s: %s' % (symbol, count))
 
 
-def test_formatRandomBoard(density=0.5):
+def test_format_random_board(density=0.5):
     while True:
-        rowCount = inputInt('Number of rows: ', minimum=2, default=0)
-        if rowCount == 0:
+        row_count = input_int('Number of rows: ', minimum=2, default=0)
+        if row_count == 0:
             break
-        colCount = inputInt('Number of columns: ', minimum=2)
-        board = makeRandomBoard(rowCount, colCount, density)
-        print(formatBoard(board, rowCount, colCount))
+        col_count = input_int('Number of columns: ', minimum=2)
+        board = make_random_board(row_count, col_count, density)
+        print(format_board(board, row_count, col_count))
         print('\n\n')
 
 
-def test_findSolutions_compareOutput():
-    from solution import findSolutions_S, findSolutions_R, findSolutions_Q
-    rowCount, colCount, countBySymbol = inputProblem()
+def compare_find_solutions_result():
+    from solution import find_solutions_s, find_solutions_r, find_solutions_q
+    row_count, col_count, count_by_symbol = input_problem()
 
-    solutionSetList = []
-    # solutionSetList is a list of sets, one set for each implementation
+    solution_set_list = []
+    # solution_set_list is a list of sets, one set for each implementation
     for func in (
-        findSolutions_R,
-        findSolutions_Q,
-        findSolutions_S,
+        find_solutions_r,
+        find_solutions_q,
+        find_solutions_s,
     ):
-        solutionSet = set()
-        for board in func(rowCount, colCount, countBySymbol):
-            boardTuple = tuple(sorted(board.items()))
-            assert boardTuple not in solutionSet
-            solutionSet.add(boardTuple)
-        solutionSetList.append(solutionSet)
-        print('Number of solutions: %s  (%s)' % (len(solutionSet), func))
+        solution_set = set()
+        for board in func(row_count, col_count, count_by_symbol):
+            board_tuple = tuple(sorted(board.items()))
+            assert board_tuple not in solution_set
+            solution_set.add(board_tuple)
+        solution_set_list.append(solution_set)
+        print('Number of solutions: %s  (%s)' % (len(solution_set), func))
 
-    assert solutionSetList[1:] == solutionSetList[:-1]  # all items equal
+    assert solution_set_list[1:] == solution_set_list[:-1]  # all items equal
 
 
-def test_findSolutions_compareTime():
+def compare_find_solutions_time():
     from time import time
-    from solution import findSolutions_S, findSolutions_R, findSolutions_Q
+    from solution import find_solutions_s, find_solutions_r, find_solutions_q
 
-    rowCount, colCount, countBySymbol = inputProblem()
+    row_count, col_count, count_by_symbol = input_problem()
 
-    timeList = []
+    time_list = []
 
     for func in (
-        findSolutions_S,
-        findSolutions_R,
-        findSolutions_Q,
-        findSolutions_S,
-        findSolutions_R,
-        findSolutions_Q,
+        find_solutions_s,
+        find_solutions_r,
+        find_solutions_q,
+        find_solutions_s,
+        find_solutions_r,
+        find_solutions_q,
     ):
-        t0 = time()
-        for board in func(rowCount, colCount, countBySymbol):
+        tm0 = time()
+        for board in func(row_count, col_count, count_by_symbol):
             pass
-        delta = time() - t0
-        timeList.append(delta)
+        delta = time() - tm0
+        time_list.append(delta)
         print('%.4f seconds   (%s)' % (delta, func))
 
 if __name__ == '__main__':
-    # test_inputInt()
-    # test_inputUnitsCount(5, 6)
-    # test_formatRandomBoard(density=0.5)
-    # test_findSolutions_compareTime()
-    # test_findSolutions_compareOutput()
+    # test_input_int()
+    # test_input_units_count(5, 6)
+    # test_format_random_board(density=0.5)
+    # compare_find_solutions_time()
+    # compare_find_solutions_result()
     main()

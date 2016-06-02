@@ -1,97 +1,96 @@
 #!/usr/bin/env python3
 
-
 class Unit(object):
     name = ''
     symbol = ''
     id = None
-    moveSteps = ()
-    moveMaxLength = 1
-    classByName = {}
-    classBySymbol = {}
-    classList = []
+    move_steps = ()
+    move_max_length = 1
+    class_by_name = {}
+    class_by_symbol = {}
+    class_list = []
 
     @classmethod
-    def registerClass(myCls, cls):
-        myCls.classByName[cls.name] = cls
-        myCls.classBySymbol[cls.symbol] = cls
+    def register_class(my_cls, cls):
+        my_cls.class_by_name[cls.name] = cls
+        my_cls.class_by_symbol[cls.symbol] = cls
 
-        cls.id = len(myCls.classList)
-        myCls.classList.append(cls)
+        cls.id = len(my_cls.class_list)
+        my_cls.class_list.append(cls)
 
-    def __init__(self, rowNum, colNum):
+    def __init__(self, row_num, col_num):
         """
-        rowNum: row number, starting from 0
-        colNum: column number, starting from 0
+        row_num: row number, starting from 0
+        col_num: column number, starting from 0
         """
-        self.setPos(rowNum, colNum)
+        self.set_pos(row_num, col_num)
 
-    def setPos(self, rowNum, colNum):
+    def set_pos(self, row_num, col_num):
         """set position of unit
 
-        rowNum: row number, starting from 0
-        colNum: column number, starting from 0
+        row_num: row number, starting from 0
+        col_num: column number, starting from 0
         """
-        self.rowNum = rowNum
-        self.colNum = colNum
+        self.row_num = row_num
+        self.col_num = col_num
 
-    def getPos(self):
+    def get_pos(self):
         """return the current position as tuple (col, row)"""
-        return (self.rowNum, self.colNum)
+        return (self.row_num, self.col_num)
 
-    def attacksPos(self, rowNum, colNum):
+    def attacks_pos(self, row_num, col_num):
         raise NotImplementedError
 
-    def attacksUnit(self, other):
-        return self.attacksPos(other.rowNum, other.colNum)
+    def attacks_unit(self, other):
+        return self.attacks_pos(other.row_num, other.col_num)
 
-    def attacksBoard(self, board):
+    def attacks_board(self, board):
         """check if this unit can attck (threatens) any unit on board
             return True if it can, False otherwise
 
-        board: a dict { (rowNum, colNum) => unitSymbol }
+        board: a dict { (row_num, col_num) => unitSymbol }
         """
-        for rowNum, colNum in board.keys():
-            if self.attacksPos(rowNum, colNum):
+        for row_num, col_num in board.keys():
+            if self.attacks_pos(row_num, col_num):
                 return True
 
         return False
 
     @classmethod
-    def posAttckedByBoard(cls, rowNum, colNum, board):
-        for (bRowNum, bColNum), symbol in board.items():
-            other = cls.classBySymbol[symbol](bRowNum, bColNum)
-            if other.attacksPos(rowNum, colNum):
+    def pos_attcked_by_board(cls, row_num, col_num, board):
+        for (brow_num, bcol_num), symbol in board.items():
+            other = cls.class_by_symbol[symbol](brow_num, bcol_num)
+            if other.attacks_pos(row_num, col_num):
                 return True
 
         return False
 
-    def canPutOnBoard(self, board):
+    def can_put_on_board(self, board):
         """check if this unit can be added to the board without threatening
             or being threatened by any unit on board
             return True if it can, False otherwise
 
-        board: a dict { (rowNum, colNum) => unitSymbol }
+        board: a dict { (row_num, col_num) => unitSymbol }
             we use dict instead of 2-dimentional array bcoz the number of units
             on board is probably small comparing to the whole table (N*M)
             should we use numpy matrix? FIXME
         """
-        for (rowNum, colNum), symbol in board.items():
-            if self.attacksPos(rowNum, colNum):
+        for (row_num, col_num), symbol in board.items():
+            if self.attacks_pos(row_num, col_num):
                 return False
 
-            other = self.classBySymbol[symbol](rowNum, colNum)
-            if other.attacksUnit(self):
+            other = self.class_by_symbol[symbol](row_num, col_num)
+            if other.attacks_unit(self):
                 return False
 
         return True
 
 
-@Unit.registerClass
+@Unit.register_class
 class King(Unit):
     name = 'king'
     symbol = 'K'
-    moveSteps = (
+    move_steps = (
         (-1, -1),
         (-1, 0),
         (-1, 1),
@@ -101,20 +100,20 @@ class King(Unit):
         (1, 0),
         (1, 1),
     )
-    moveMaxLength = 1
+    move_max_length = 1
 
-    def attacksPos(self, rowNum, colNum):
+    def attacks_pos(self, row_num, col_num):
         return 1 == max(
-            abs(rowNum - self.rowNum),
-            abs(colNum - self.colNum),
+            abs(row_num - self.row_num),
+            abs(col_num - self.col_num),
         )
 
 
-@Unit.registerClass
+@Unit.register_class
 class Queen(Unit):
     name = 'queen'
     symbol = 'Q'
-    moveSteps = (
+    move_steps = (
         (-1, -1),
         (-1, 0),
         (-1, 1),
@@ -124,50 +123,50 @@ class Queen(Unit):
         (1, 0),
         (1, 1),
     )
-    moveMaxLength = -1
+    move_max_length = -1
 
-    def attacksPos(self, rowNum, colNum):
-        return rowNum == self.rowNum or colNum == self.colNum or \
-            abs(rowNum - self.rowNum) == abs(colNum - self.colNum)
+    def attacks_pos(self, row_num, col_num):
+        return row_num == self.row_num or col_num == self.col_num or \
+            abs(row_num - self.row_num) == abs(col_num - self.col_num)
 
 
-@Unit.registerClass
+@Unit.register_class
 class Bishop(Unit):
     name = 'bishop'
     symbol = 'B'
-    moveSteps = (
+    move_steps = (
         (-1, -1),
         (-1, 1),
         (1, -1),
         (1, 1),
     )
-    moveMaxLength = -1
+    move_max_length = -1
 
-    def attacksPos(self, rowNum, colNum):
-        return abs(rowNum - self.rowNum) == abs(colNum - self.colNum)
+    def attacks_pos(self, row_num, col_num):
+        return abs(row_num - self.row_num) == abs(col_num - self.col_num)
 
 
-@Unit.registerClass
+@Unit.register_class
 class Rook(Unit):
     name = 'rook'
     symbol = 'R'
-    moveSteps = (
+    move_steps = (
         (-1, 0),
         (0, -1),
         (0, 1),
         (1, 0),
     )
-    moveMaxLength = -1
+    move_max_length = -1
 
-    def attacksPos(self, rowNum, colNum):
-        return rowNum == self.rowNum or colNum == self.colNum
+    def attacks_pos(self, row_num, col_num):
+        return row_num == self.row_num or col_num == self.col_num
 
 
-@Unit.registerClass
+@Unit.register_class
 class Knight(Unit):
     name = 'knight'
     symbol = 'N'
-    moveSteps = (
+    move_steps = (
         (-2, -1),
         (-2, 1),
         (-1, -2),
@@ -177,16 +176,16 @@ class Knight(Unit):
         (2, -1),
         (2, 1),
     )
-    moveMaxLength = 1
+    move_max_length = 1
 
-    def attacksPos(self, rowNum, colNum):
+    def attacks_pos(self, row_num, col_num):
         return {1, 2} == {
-            abs(rowNum - self.rowNum),
-            abs(colNum - self.colNum),
+            abs(row_num - self.row_num),
+            abs(col_num - self.col_num),
         }
 
 
 if __name__ == '__main__':
     from pprint import pprint, pformat
-    print('classByName = %s' % pformat(Unit.classByName))
-    print('classBySymbol = %s' % pformat(Unit.classBySymbol))
+    print('class_by_name = %s' % pformat(Unit.class_by_name))
+    print('class_by_symbol = %s' % pformat(Unit.class_by_symbol))
