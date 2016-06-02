@@ -242,5 +242,32 @@ def compare_find_solutions_time():
         time_list.append(delta)
         print('%.4f seconds   (%s)' % (delta, func))
 
+def chess_challenge_no_input():
+    """
+    solves the probem for the exact parameters given in the challange
+    prints out the number of unique configuration, and running time
+    """
+    row_count = 7
+    col_count = 7
+    count_by_symbol = {
+        'K': 2,
+        'Q': 2,
+        'B': 2,
+        'R': 0,
+        'N': 1,
+    }
+
+    count = 0
+    tm0 = now()
+    for _ in find_solutions_s(row_count, col_count, count_by_symbol):
+        count += 1
+    delta = now() - tm0
+
+    print('%s unique configurations'%count)
+    print('%.4f seconds' % delta)
+
+
+
 if __name__ == '__main__':
     show_all_confs()
+    #  chess_challenge_no_input()
