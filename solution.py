@@ -1,4 +1,11 @@
 #!/usr/bin/env python3
+"""
+this module is responsible for finding and iterating over all unique possible
+solutions / configurations by the given parameters
+"""
+
+import queue
+
 from units import Unit
 
 
@@ -46,15 +53,16 @@ def find_solutions_s(row_count, col_count, count_by_symbol):
                 cell_num + 1,
             ))
 
-        (row_num, col_num) = cell_pos = divmod(cell_num, col_count)
-        if Unit.pos_attcked_by_board(row_num, col_num, board):
+        cell_pos = divmod(cell_num, col_count)
+        # cell_pos == (row_num, col_num)
+        if Unit.pos_attcked_by_board(cell_pos[0], cell_pos[1], board):
             continue
         for unit_id, count in enumerate(stage):
             if count < 1:
                 continue
             if cell_pos in board:
                 continue
-            unit = Unit.class_list[unit_id](row_num, col_num)
+            unit = Unit.class_list[unit_id](*cell_pos)
             if unit.attacks_board(board):
                 continue
 
@@ -100,15 +108,16 @@ def _rec_low(row_count, col_count, board, stage, cell_num):
             cell_num + 1,
         )
 
-    (row_num, col_num) = cell_pos = divmod(cell_num, col_count)
-    if Unit.pos_attcked_by_board(row_num, col_num, board):
+    cell_pos = divmod(cell_num, col_count)
+    # cell_pos == (row_num, col_num)
+    if Unit.pos_attcked_by_board(cell_pos[0], cell_pos[1], board):
         return
     for unit_id, count in enumerate(stage):
         if count < 1:
             continue
         if cell_pos in board:
             continue
-        unit = Unit.class_list[unit_id](row_num, col_num)
+        unit = Unit.class_list[unit_id](*cell_pos)
         if unit.attacks_board(board):
             continue
 
@@ -167,7 +176,6 @@ def find_solutions_q(row_count, col_count, count_by_symbol):
     this is a generator, yields a completed `board` each time
     where `board` is a dict of {(row_num, col_num) => unitSymbol}
     """
-    from queue import Queue
     # `todo` is a Queue instance (we use .empty, .put, and .get)
     # each item is a tuple of (board, stage, cell_num)
     #   `board` is a dict of {(row_num, col_num) => unitSymbol}
@@ -184,7 +192,7 @@ def find_solutions_q(row_count, col_count, count_by_symbol):
         count_by_symbol.get(cls.symbol, 0)
         for cls in Unit.class_list
     )
-    todo = Queue()
+    todo = queue.Queue()
     todo.put((
         {},     # initial board
         stage,  # initial stage
@@ -203,15 +211,16 @@ def find_solutions_q(row_count, col_count, count_by_symbol):
                 cell_num + 1,
             ))
 
-        (row_num, col_num) = cell_pos = divmod(cell_num, col_count)
-        if Unit.pos_attcked_by_board(row_num, col_num, board):
+        cell_pos = divmod(cell_num, col_count)
+        # cell_pos == (row_num, col_num)
+        if Unit.pos_attcked_by_board(cell_pos[0], cell_pos[1], board):
             continue
         for unit_id, count in enumerate(stage):
             if count < 1:
                 continue
             if cell_pos in board:
                 continue
-            unit = Unit.class_list[unit_id](row_num, col_num)
+            unit = Unit.class_list[unit_id](*cell_pos)
             if unit.attacks_board(board):
                 continue
 
@@ -232,6 +241,3 @@ def find_solutions_q(row_count, col_count, count_by_symbol):
                     tuple(new_stage),
                     cell_num + 1,
                 ))
-
-
-find_solutions = find_solutions_s

@@ -3,7 +3,7 @@
 import sys
 
 from units import Unit
-from solution import find_solutions
+from solution import find_solutions_s as find_solutions
 
 
 def input_int(prompt, default=None, minimum=None, maximum=None):
