@@ -14,14 +14,14 @@ def find_solutions_s(row_count, col_count, count_by_symbol):
 
     row_count: int, number or rows
     col_count: int, number of columns
-    count_by_symbol: dict of { unitSymbol => count }
+    count_by_symbol: dict of { unit_symbol => count }
 
     this is a generator, yields a completed `board` each time
-    where `board` is a dict of {(row_num, col_num) => unitSymbol}
+    where `board` is a dict of {(row_num, col_num) => unit_symbol}
     """
     # `todo` is a stack (we use .append, and .pop)
     # each item is a tuple of (board, stage, cell_num)
-    #   `board` is a dict of {(row_num, col_num) => unitSymbol}
+    #   `board` is a dict of {(row_num, col_num) => unit_symbol}
     #   `stage` is a tuple containing count or each unit type:
     #       (king_count, queen_count, bishop_count, rook_count, knight_count)
     #   `cell_num` is an int resulting from `row_num * col_count + col_num`
@@ -160,10 +160,10 @@ def find_solutions_r(row_count, col_count, count_by_symbol):
 
     row_count: int, number or rows
     col_count: int, number of columns
-    count_by_symbol: dict of { unitSymbol => count }
+    count_by_symbol: dict of { unit_symbol => count }
 
     this is a generator, yields a completed `board` each time
-    where `board` is a dict of {(row_num, col_num) => unitSymbol}
+    where `board` is a dict of {(row_num, col_num) => unit_symbol}
     """
     stage = tuple(
         count_by_symbol.get(cls.symbol, 0)
@@ -183,14 +183,14 @@ def find_solutions_q(row_count, col_count, count_by_symbol):
 
     row_count: int, number or rows
     col_count: int, number of columns
-    count_by_symbol: dict of { unitSymbol => count }
+    count_by_symbol: dict of { unit_symbol => count }
 
     this is a generator, yields a completed `board` each time
-    where `board` is a dict of {(row_num, col_num) => unitSymbol}
+    where `board` is a dict of {(row_num, col_num) => unit_symbol}
     """
     # `todo` is a Queue instance (we use .empty, .put, and .get)
     # each item is a tuple of (board, stage, cell_num)
-    #   `board` is a dict of {(row_num, col_num) => unitSymbol}
+    #   `board` is a dict of {(row_num, col_num) => unit_symbol}
     #   `stage` is a tuple containing count or each unit type:
     #       (king_count, queen_count, bishop_count, rook_count, knight_count)
     #   `cell_num` is an int resulting from `row_num * col_count + col_num`

@@ -56,7 +56,7 @@ class Unit(object):
         """check if this unit can attck (threatens) any unit on board
             return True if it can, False otherwise
 
-        board: a dict { (row_num, col_num) => unitSymbol }
+        board: a dict { (row_num, col_num) => unit_symbol }
         """
         for row_num, col_num in board.keys():
             if self.attacks_pos(row_num, col_num):
