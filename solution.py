@@ -38,18 +38,19 @@ def find_solutions_s(row_count, col_count, count_by_symbol):
     todo = [(
         {},     # initial board
         stage,  # initial stage
+        sum(stage),  # initial stage_size
         0,      # first cell (top-left corner)
     )]
 
     while todo:  # stack not empty
-        board, stage, cell_num = todo.pop()
-        stage_size = sum(stage)
+        board, stage, stage_size, cell_num = todo.pop()
 
         if cell_num < cell_count - stage_size:
             # we can leave cell empty, skip to next one
             todo.append((
                 board,
                 stage,
+                stage_size,
                 cell_num + 1,
             ))
 
@@ -81,6 +82,7 @@ def find_solutions_s(row_count, col_count, count_by_symbol):
                 todo.append((
                     new_board,
                     tuple(new_stage),
+                    stage_size - 1,
                     cell_num + 1,
                 ))
 
