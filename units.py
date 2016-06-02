@@ -79,26 +79,6 @@ class Unit(object):
 
         return False
 
-    def can_put_on_board(self, board):
-        """check if this unit can be added to the board without threatening
-            or being threatened by any unit on board
-            return True if it can, False otherwise
-
-        board: a dict { (row_num, col_num) => unitSymbol }
-            we use dict instead of 2-dimentional array bcoz the number of units
-            on board is probably small comparing to the whole table (N*M)
-            should we use numpy matrix? FIXME
-        """
-        for (row_num, col_num), symbol in board.items():
-            if self.attacks_pos(row_num, col_num):
-                return False
-
-            other = self.class_by_symbol[symbol](row_num, col_num)
-            if other.attacks_unit(self):
-                return False
-
-        return True
-
 
 @Unit.register_class
 class King(Unit):
