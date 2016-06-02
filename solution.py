@@ -71,8 +71,6 @@ def find_solutions_s(row_count, col_count, count_by_symbol):
         for unit_id, count in enumerate(stage):
             if count < 1:
                 continue
-            if cell_pos in board:
-                continue
             unit = Unit.class_list[unit_id](*cell_pos)
             if unit.attacks_board(board):
                 continue
