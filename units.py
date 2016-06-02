@@ -71,8 +71,8 @@ class Unit(object):
         position (row_num, col_num)
         """
         for (brow_num, bcol_num), symbol in board.items():
-            other = cls.class_by_symbol[symbol](brow_num, bcol_num)
-            if other.attacks_pos(row_num, col_num):
+            if cls.class_by_symbol[symbol](brow_num, bcol_num)\
+            .attacks_pos(row_num, col_num):
                 return True
 
         return False
@@ -98,8 +98,10 @@ class Queen(Unit):
     symbol = 'Q'
 
     def attacks_pos(self, row_num, col_num):
-        return row_num == self.row_num or col_num == self.col_num or \
-            abs(row_num - self.row_num) == abs(col_num - self.col_num)
+        drow = row_num - self.row_num
+        dcol = col_num - self.col_num
+        return drow is 0 or dcol is 0 or \
+               abs(drow) == abs(dcol)
 
 
 @Unit.register_class
