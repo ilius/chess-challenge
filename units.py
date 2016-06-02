@@ -3,7 +3,7 @@
 class Unit(object):
     name = ''
     symbol = ''
-    id = None
+    cid = None
     move_steps = ()
     move_max_length = 1
     class_by_name = {}
@@ -15,7 +15,7 @@ class Unit(object):
         my_cls.class_by_name[cls.name] = cls
         my_cls.class_by_symbol[cls.symbol] = cls
 
-        cls.id = len(my_cls.class_list)
+        cls.cid = len(my_cls.class_list)
         my_cls.class_list.append(cls)
 
     def __init__(self, row_num, col_num):
