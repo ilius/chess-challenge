@@ -55,7 +55,7 @@ def find_solutions_s(row_count, col_count, count_by_symbol):
 
         cell_pos = divmod(cell_num, col_count)
         # cell_pos == (row_num, col_num)
-        if Unit.pos_attcked_by_board(cell_pos[0], cell_pos[1], board):
+        if Unit.pos_attacked_by_board(cell_pos[0], cell_pos[1], board):
             continue
         for unit_id, count in enumerate(stage):
             if count < 1:
@@ -110,7 +110,7 @@ def _rec_low(row_count, col_count, board, stage, cell_num):
 
     cell_pos = divmod(cell_num, col_count)
     # cell_pos == (row_num, col_num)
-    if Unit.pos_attcked_by_board(cell_pos[0], cell_pos[1], board):
+    if Unit.pos_attacked_by_board(cell_pos[0], cell_pos[1], board):
         return
     for unit_id, count in enumerate(stage):
         if count < 1:
@@ -213,7 +213,7 @@ def find_solutions_q(row_count, col_count, count_by_symbol):
 
         cell_pos = divmod(cell_num, col_count)
         # cell_pos == (row_num, col_num)
-        if Unit.pos_attcked_by_board(cell_pos[0], cell_pos[1], board):
+        if Unit.pos_attacked_by_board(cell_pos[0], cell_pos[1], board):
             continue
         for unit_id, count in enumerate(stage):
             if count < 1:

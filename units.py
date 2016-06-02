@@ -67,7 +67,7 @@ class Unit(object):
         return False
 
     @classmethod
-    def pos_attcked_by_board(cls, row_num, col_num, board):
+    def pos_attacked_by_board(cls, row_num, col_num, board):
         """
         check if any unit on given `board` can attck (threatens) the given
         position (row_num, col_num)
