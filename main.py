@@ -200,7 +200,7 @@ def compare_find_solutions_result():
         find_solutions_s,
     )
 
-    for func in func_list:#  pylint!
+    for func in func_list:  # pylint!
         solution_set = set()
         for board in func(row_count, col_count, count_by_symbol):
             board_tuple = tuple(sorted(board.items()))
@@ -230,7 +230,7 @@ def compare_find_solutions_time():
         find_solutions_q,
     )
 
-    for func in func_list:#  pylint!
+    for func in func_list:  # pylint!
         tm0 = now()
         for _ in func(row_count, col_count, count_by_symbol):
             pass
@@ -239,9 +239,4 @@ def compare_find_solutions_time():
         print('%.4f seconds   (%s)' % (delta, func))
 
 if __name__ == '__main__':
-    # test_input_int()
-    # test_input_units_count(5, 6)
-    # test_format_random_board(density=0.5)
-    # compare_find_solutions_time()
-    # compare_find_solutions_result()
     main()

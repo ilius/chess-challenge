@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """defines classes for different types of chess units / pieces"""
 
+
 class Unit(object):
     """base class for chess unit / piece type
     should not be instanciated directly
@@ -201,6 +202,3 @@ class Knight(Unit):
             abs(row_num - self.row_num),
             abs(col_num - self.col_num),
         }
-
-
-
