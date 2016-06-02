@@ -1,6 +1,10 @@
 #!/usr/bin/env python3
+"""defines classes for different types of chess units / pieces"""
 
 class Unit(object):
+    """base class for chess unit / piece type
+    should not be instanciated directly
+    """
     name = ''
     symbol = ''
     cid = None
@@ -11,12 +15,15 @@ class Unit(object):
     class_list = []
 
     @classmethod
-    def register_class(my_cls, cls):
-        my_cls.class_by_name[cls.name] = cls
-        my_cls.class_by_symbol[cls.symbol] = cls
+    def register_class(cls, sub):
+        """
+        registers a Unit subclass
+        """
+        cls.class_by_name[sub.name] = sub
+        cls.class_by_symbol[sub.symbol] = sub
 
-        cls.cid = len(my_cls.class_list)
-        my_cls.class_list.append(cls)
+        sub.cid = len(cls.class_list)
+        cls.class_list.append(sub)
 
     def __init__(self, row_num, col_num):
         """
@@ -39,9 +46,11 @@ class Unit(object):
         return (self.row_num, self.col_num)
 
     def attacks_pos(self, row_num, col_num):
+        """check if this unit can attck (threatens) the given position"""
         raise NotImplementedError
 
     def attacks_unit(self, other):
+        """check if this unit can attck (threatens) the given unit object"""
         return self.attacks_pos(other.row_num, other.col_num)
 
     def attacks_board(self, board):
@@ -58,6 +67,10 @@ class Unit(object):
 
     @classmethod
     def pos_attcked_by_board(cls, row_num, col_num, board):
+        """
+        check if any unit on given `board` can attck (threatens) the given
+        position (row_num, col_num)
+        """
         for (brow_num, bcol_num), symbol in board.items():
             other = cls.class_by_symbol[symbol](brow_num, bcol_num)
             if other.attacks_pos(row_num, col_num):
@@ -88,6 +101,7 @@ class Unit(object):
 
 @Unit.register_class
 class King(Unit):
+    """King unit/piece class"""
     name = 'king'
     symbol = 'K'
     move_steps = (
@@ -103,14 +117,15 @@ class King(Unit):
     move_max_length = 1
 
     def attacks_pos(self, row_num, col_num):
-        return 1 == max(
+        return max(
             abs(row_num - self.row_num),
             abs(col_num - self.col_num),
-        )
+        ) == 1
 
 
 @Unit.register_class
 class Queen(Unit):
+    """Queen unit/piece class"""
     name = 'queen'
     symbol = 'Q'
     move_steps = (
@@ -132,6 +147,7 @@ class Queen(Unit):
 
 @Unit.register_class
 class Bishop(Unit):
+    """Bishop unit/piece class"""
     name = 'bishop'
     symbol = 'B'
     move_steps = (
@@ -148,6 +164,7 @@ class Bishop(Unit):
 
 @Unit.register_class
 class Rook(Unit):
+    """Rook unit/piece class"""
     name = 'rook'
     symbol = 'R'
     move_steps = (
@@ -164,6 +181,7 @@ class Rook(Unit):
 
 @Unit.register_class
 class Knight(Unit):
+    """Knight unit/piece class"""
     name = 'knight'
     symbol = 'N'
     move_steps = (
@@ -185,7 +203,4 @@ class Knight(Unit):
         }
 
 
-if __name__ == '__main__':
-    from pprint import pprint, pformat
-    print('class_by_name = %s' % pformat(Unit.class_by_name))
-    print('class_by_symbol = %s' % pformat(Unit.class_by_symbol))
+
