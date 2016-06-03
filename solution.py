@@ -35,6 +35,7 @@ def find_solutions_s(row_count, col_count, count_by_symbol):
         count_by_symbol.get(cls.symbol, 0)
         for cls in Unit.class_list
     )
+    del count_by_symbol
     todo = [(
         {},     # initial board
         stage,  # initial stage
