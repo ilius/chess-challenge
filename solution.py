@@ -79,8 +79,9 @@ def find_solutions_s(row_count, col_count, count_by_symbol):
             new_board = board.copy()
             new_board[cell_pos] = unit.symbol
 
-            new_stage = list(stage)
-            new_stage[unit_id] -= 1
+            new_stage = stage[:unit_id] + \
+                        (stage[unit_id] - 1,) + \
+                        stage[unit_id+1:]
 
             if stage_size <= 1:  # new_stage empty, new_board complete
                 yield new_board
@@ -89,7 +90,7 @@ def find_solutions_s(row_count, col_count, count_by_symbol):
             if cell_num < cell_count - (stage_size - 1):
                 todo.append((
                     new_board,
-                    tuple(new_stage),
+                    new_stage,
                     stage_size - 1,
                     cell_num + 1,
                     unit,  # the new last_unit
@@ -142,8 +143,9 @@ def _rec_low(
         new_board = board.copy()
         new_board[cell_pos] = unit.symbol
 
-        new_stage = list(stage)
-        new_stage[unit_id] -= 1
+        new_stage = stage[:unit_id] + \
+                    (stage[unit_id] - 1,) + \
+                    stage[unit_id+1:]
 
         if stage_size <= 1:  # new_stage empty, new_board complete
             yield new_board
@@ -154,7 +156,7 @@ def _rec_low(
                 row_count,
                 col_count,
                 new_board,
-                tuple(new_stage),
+                new_stage,
                 stage_size - 1,
                 cell_num + 1,
                 unit,  # the new last_unit
@@ -248,8 +250,9 @@ def find_solutions_q(row_count, col_count, count_by_symbol):
             new_board = board.copy()
             new_board[cell_pos] = unit.symbol
 
-            new_stage = list(stage)
-            new_stage[unit_id] -= 1
+            new_stage = stage[:unit_id] + \
+                        (stage[unit_id] - 1,) + \
+                        stage[unit_id+1:]
 
             if stage_size <= 1:  # new_stage empty, new_board complete
                 yield new_board
@@ -258,6 +261,6 @@ def find_solutions_q(row_count, col_count, count_by_symbol):
             if cell_num < cell_count - (stage_size - 1):
                 todo.put((
                     new_board,
-                    tuple(new_stage),
+                    new_stage,
                     cell_num + 1,
                 ))
