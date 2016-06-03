@@ -126,8 +126,6 @@ def _rec_low(row_count, col_count, board, stage, cell_num):
     for unit_id, count in enumerate(stage):
         if count < 1:
             continue
-        if cell_pos in board:
-            continue
         unit = Unit.class_list[unit_id](*cell_pos)
         if unit.attacks_board(board):
             continue
