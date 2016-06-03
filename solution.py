@@ -96,7 +96,14 @@ def find_solutions_s(row_count, col_count, count_by_symbol):
                 ))
 
 
-def _rec_low(row_count, col_count, board, stage, stage_size, cell_num):
+def _rec_low(
+    row_count,
+    col_count,
+    board,
+    stage,
+    stage_size,
+    cell_num,
+):
     #   `stage` is a tuple containing count or each unit type:
     #       (king_count, queen_count, bishop_count, rook_count, knight_count)
     #   `cell_num` is an int resulting from `row_num * col_count + col_num`
