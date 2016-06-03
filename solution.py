@@ -96,7 +96,7 @@ def find_solutions_s(row_count, col_count, count_by_symbol):
                 ))
 
 
-def _rec_low(row_count, col_count, board, stage, cell_num):
+def _rec_low(row_count, col_count, board, stage, stage_size, cell_num):
     #   `stage` is a tuple containing count or each unit type:
     #       (king_count, queen_count, bishop_count, rook_count, knight_count)
     #   `cell_num` is an int resulting from `row_num * col_count + col_num`
@@ -107,7 +107,6 @@ def _rec_low(row_count, col_count, board, stage, cell_num):
     #       To decode cell_num: row_num, col_num = divmod(cell_num, col_count)
 
     cell_count = row_count * col_count
-    stage_size = sum(stage)
 
     if cell_num < cell_count - stage_size:
         # we can leave cell empty, skip to next one
@@ -116,6 +115,7 @@ def _rec_low(row_count, col_count, board, stage, cell_num):
             col_count,
             board,
             stage,
+            stage_size,
             cell_num + 1,
         )
 
@@ -146,6 +146,7 @@ def _rec_low(row_count, col_count, board, stage, cell_num):
                 col_count,
                 new_board,
                 tuple(new_stage),
+                stage_size - 1,
                 cell_num + 1,
             )
 
@@ -170,6 +171,7 @@ def find_solutions_r(row_count, col_count, count_by_symbol):
         col_count,
         {},     # initial board
         stage,  # initial stage
+        sum(stage),  # initial stage_size
         0,      # first cell (top-left corner)
     )
 
