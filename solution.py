@@ -22,8 +22,8 @@ def find_solutions_s(row_count, col_count, count_by_symbol):
     # `todo` is a stack (we use .append, and .pop)
     # each item is a tuple of (board, stage, cell_num)
     #   `board` is a dict of {(row_num, col_num) => unit_symbol}
-    #   `stage` is a tuple containing count or each unit type:
-    #       (king_count, queen_count, bishop_count, rook_count, knight_count)
+    #   `stage` is a list containing count or each unit type:
+    #       [king_count, queen_count, bishop_count, rook_count, knight_count]
     #   `cell_num` is an int resulting from `row_num * col_count + col_num`
     #       representing the next cell that we want to check
     #       and we don't want any unit to put before this cell on the current
@@ -31,10 +31,10 @@ def find_solutions_s(row_count, col_count, count_by_symbol):
     #       computation
     #       To decode cell_num: row_num, col_num = divmod(cell_num, col_count)
     cell_count = row_count * col_count
-    stage = tuple(
+    stage = [
         count_by_symbol.get(cls.symbol, 0)
         for cls in Unit.class_list
-    )
+    ]
     del count_by_symbol
     todo = [(
         {},     # initial board
@@ -79,9 +79,8 @@ def find_solutions_s(row_count, col_count, count_by_symbol):
             new_board = board.copy()
             new_board[cell_pos] = unit.symbol
 
-            new_stage = stage[:unit_id] + \
-                        (stage[unit_id] - 1,) + \
-                        stage[unit_id+1:]
+            new_stage = list(stage)
+            new_stage[unit_id] -= 1
 
             if stage_size <= 1:  # new_stage empty, new_board complete
                 yield new_board
@@ -106,8 +105,8 @@ def _rec_low(
     cell_num,
     last_unit,
 ):
-    #   `stage` is a tuple containing count or each unit type:
-    #       (king_count, queen_count, bishop_count, rook_count, knight_count)
+    #   `stage` is a list containing count or each unit type:
+    #       [king_count, queen_count, bishop_count, rook_count, knight_count]
     #   `cell_num` is an int resulting from `row_num * col_count + col_num`
     #       representing the next cell that we want to check
     #       and we don't want any unit to put before this cell on the current
@@ -143,9 +142,8 @@ def _rec_low(
         new_board = board.copy()
         new_board[cell_pos] = unit.symbol
 
-        new_stage = stage[:unit_id] + \
-                    (stage[unit_id] - 1,) + \
-                    stage[unit_id+1:]
+        new_stage = list(stage)
+        new_stage[unit_id] -= 1
 
         if stage_size <= 1:  # new_stage empty, new_board complete
             yield new_board
@@ -174,10 +172,10 @@ def find_solutions_r(row_count, col_count, count_by_symbol):
     this is a generator, yields a completed `board` each time
     where `board` is a dict of {(row_num, col_num) => unit_symbol}
     """
-    stage = tuple(
+    stage = [
         count_by_symbol.get(cls.symbol, 0)
         for cls in Unit.class_list
-    )
+    ]
     yield from _rec_low(
         row_count,
         col_count,
@@ -202,8 +200,8 @@ def find_solutions_q(row_count, col_count, count_by_symbol):
     # `todo` is a Queue instance (we use .empty, .put, and .get)
     # each item is a tuple of (board, stage, cell_num)
     #   `board` is a dict of {(row_num, col_num) => unit_symbol}
-    #   `stage` is a tuple containing count or each unit type:
-    #       (king_count, queen_count, bishop_count, rook_count, knight_count)
+    #   `stage` is a list containing count or each unit type:
+    #       [king_count, queen_count, bishop_count, rook_count, knight_count]
     #   `cell_num` is an int resulting from `row_num * col_count + col_num`
     #       representing the next cell that we want to check
     #       and we don't want any unit to put before this cell on the current
@@ -211,10 +209,10 @@ def find_solutions_q(row_count, col_count, count_by_symbol):
     #       computation
     #       To decode cell_num: row_num, col_num = divmod(cell_num, col_count)
     cell_count = row_count * col_count
-    stage = tuple(
+    stage = [
         count_by_symbol.get(cls.symbol, 0)
         for cls in Unit.class_list
-    )
+    ]
     todo = queue.Queue()
     todo.put((
         {},     # initial board
@@ -250,9 +248,8 @@ def find_solutions_q(row_count, col_count, count_by_symbol):
             new_board = board.copy()
             new_board[cell_pos] = unit.symbol
 
-            new_stage = stage[:unit_id] + \
-                        (stage[unit_id] - 1,) + \
-                        stage[unit_id+1:]
+            new_stage = list(stage)
+            new_stage[unit_id] -= 1
 
             if stage_size <= 1:  # new_stage empty, new_board complete
                 yield new_board
