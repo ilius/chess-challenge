@@ -103,6 +103,7 @@ def _rec_low(
     stage,
     stage_size,
     cell_num,
+    last_unit,
 ):
     #   `stage` is a tuple containing count or each unit type:
     #       (king_count, queen_count, bishop_count, rook_count, knight_count)
@@ -124,6 +125,7 @@ def _rec_low(
             stage,
             stage_size,
             cell_num + 1,
+            last_unit,
         )
 
     cell_pos = divmod(cell_num, col_count)
@@ -155,6 +157,7 @@ def _rec_low(
                 tuple(new_stage),
                 stage_size - 1,
                 cell_num + 1,
+                unit,  # the new last_unit
             )
 
 
@@ -180,6 +183,7 @@ def find_solutions_r(row_count, col_count, count_by_symbol):
         stage,  # initial stage
         sum(stage),  # initial stage_size
         0,      # first cell (top-left corner)
+        None,   # last_unit
     )
 
 
