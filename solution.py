@@ -136,7 +136,6 @@ def _rec_low(row_count, col_count, board, stage, cell_num):
 
         new_stage = list(stage)
         new_stage[unit_id] -= 1
-        assert new_stage[unit_id] >= 0
 
         if stage_size <= 1:  # new_stage empty, new_board complete
             yield new_board
@@ -239,7 +238,6 @@ def find_solutions_q(row_count, col_count, count_by_symbol):
 
             new_stage = list(stage)
             new_stage[unit_id] -= 1
-            assert new_stage[unit_id] >= 0
 
             if stage_size <= 1:  # new_stage empty, new_board complete
                 yield new_board
