@@ -116,6 +116,37 @@ def _rec_low(
 
     cell_count = row_count * col_count
 
+    cell_pos = divmod(cell_num, col_count)
+    # cell_pos == (row_num, col_num)
+    if not Unit.pos_attacked_by_board(cell_pos[0], cell_pos[1], board):
+        for unit_id, count in enumerate(stage):
+            if count < 1:
+                continue
+            unit = Unit.class_list[unit_id](*cell_pos)
+            if unit.attacks_board(board):
+                continue
+
+            new_board = board.copy()
+            new_board[cell_pos] = unit.symbol
+
+            new_stage = list(stage)
+            new_stage[unit_id] -= 1
+
+            if stage_size <= 1:  # new_stage empty, new_board complete
+                yield new_board
+                continue
+
+            if cell_num < cell_count - (stage_size - 1):
+                yield from _rec_low(
+                    row_count,
+                    col_count,
+                    new_board,
+                    new_stage,
+                    stage_size - 1,
+                    cell_num + 1,
+                    unit,  # the new last_unit
+                )
+
     if cell_num < cell_count - stage_size:
         # we can leave cell empty, skip to next one
         yield from _rec_low(
@@ -127,38 +158,6 @@ def _rec_low(
             cell_num + 1,
             last_unit,
         )
-
-    cell_pos = divmod(cell_num, col_count)
-    # cell_pos == (row_num, col_num)
-    if Unit.pos_attacked_by_board(cell_pos[0], cell_pos[1], board):
-        return
-    for unit_id, count in enumerate(stage):
-        if count < 1:
-            continue
-        unit = Unit.class_list[unit_id](*cell_pos)
-        if unit.attacks_board(board):
-            continue
-
-        new_board = board.copy()
-        new_board[cell_pos] = unit.symbol
-
-        new_stage = list(stage)
-        new_stage[unit_id] -= 1
-
-        if stage_size <= 1:  # new_stage empty, new_board complete
-            yield new_board
-            continue
-
-        if cell_num < cell_count - (stage_size - 1):
-            yield from _rec_low(
-                row_count,
-                col_count,
-                new_board,
-                new_stage,
-                stage_size - 1,
-                cell_num + 1,
-                unit,  # the new last_unit
-            )
 
 
 def find_solutions_r(row_count, col_count, count_by_symbol):
