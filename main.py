@@ -5,7 +5,7 @@ import sys
 from time import time as now
 import random
 
-from pieces import Piece
+from pieces import ChessPiece
 from solution import (
     find_solutions_s,
     find_solutions_r,
@@ -61,7 +61,7 @@ def input_pieces_count(row_count, col_count):
     count_by_symbol = {}
     total_count = 0
     for symbol in PIECE_SYMBOLS:
-        cls = Piece.class_by_symbol[symbol]
+        cls = ChessPiece.class_by_symbol[symbol]
         plural_name = cls.name.capitalize() + 's'
         count = input_int(
             'Number of %s: ' % plural_name,
@@ -103,8 +103,8 @@ def make_random_board(row_count, col_count, density=0.5):
             factor = random.random() / density
             if factor >= 1:
                 continue
-            index = int(factor * len(Piece.class_list))
-            board[(row_num, col_num)] = Piece.class_list[index].symbol
+            index = int(factor * len(ChessPiece.class_list))
+            board[(row_num, col_num)] = ChessPiece.class_list[index].symbol
     return board
 
 
@@ -112,7 +112,7 @@ def input_problem():
     """
     get the board size and pieces count from stdin or command line arguments
     """
-    if len(sys.argv) == 3 + len(Piece.class_list):
+    if len(sys.argv) == 3 + len(ChessPiece.class_list):
         row_count = int(sys.argv[1])
         col_count = int(sys.argv[2])
         count_by_symbol = {}
@@ -120,7 +120,7 @@ def input_problem():
         print('Number of columns: %s' % col_count)
         print()
         for index, symbol in enumerate(PIECE_SYMBOLS):
-            cls = Piece.class_by_symbol[symbol]
+            cls = ChessPiece.class_by_symbol[symbol]
             count_by_symbol[cls.symbol] = int(sys.argv[3+index])
             print('Number of %ss: %s' % (
                 cls.name.capitalize(),
@@ -147,7 +147,7 @@ def mark_board_under_attack_cells(board, row_count, col_count, symbol='.'):
             try:
                 new_board[(row_num, col_num)] = board[(row_num, col_num)]
             except KeyError:
-                if Piece.pos_attacked_by_board(row_num, col_num, board):
+                if ChessPiece.pos_attacked_by_board(row_num, col_num, board):
                     new_board[(row_num, col_num)] = symbol
     return new_board
 
@@ -188,7 +188,7 @@ def test_input_int():
 def test_input_pieces_count(row_count, col_count):
     """test `input_pieces_count` function"""
     count_by_symbol = input_pieces_count(row_count, col_count)
-    assert set(count_by_symbol.keys()) == set(Piece.class_by_symbol.keys())
+    assert set(count_by_symbol.keys()) == set(ChessPiece.class_by_symbol.keys())
     for count in count_by_symbol.values():
         assert isinstance(count, int)
         assert count >= 0

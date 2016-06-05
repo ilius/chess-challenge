@@ -6,7 +6,7 @@ solutions / configurations by the given parameters
 
 import queue
 
-from pieces import Piece
+from pieces import ChessPiece
 
 
 def find_solutions_s(row_count, col_count, count_by_symbol):
@@ -33,7 +33,7 @@ def find_solutions_s(row_count, col_count, count_by_symbol):
     cell_count = row_count * col_count
     stage = [
         count_by_symbol.get(cls.symbol, 0)
-        for cls in Piece.class_list
+        for cls in ChessPiece.class_list
     ]
     del count_by_symbol
     todo = [(
@@ -67,12 +67,12 @@ def find_solutions_s(row_count, col_count, count_by_symbol):
         # cell_pos == (row_num, col_num)
         if last_piece and last_piece.attacks_pos(*cell_pos):
             continue
-        if Piece.pos_attacked_by_board(cell_pos[0], cell_pos[1], board):
+        if ChessPiece.pos_attacked_by_board(cell_pos[0], cell_pos[1], board):
             continue
         for piece_id, count in enumerate(stage):
             if count < 1:
                 continue
-            piece = Piece.class_list[piece_id](*cell_pos)
+            piece = ChessPiece.class_list[piece_id](*cell_pos)
             if piece.attacks_board(board):
                 continue
 
@@ -118,11 +118,11 @@ def _rec_low(
 
     cell_pos = divmod(cell_num, col_count)
     # cell_pos == (row_num, col_num)
-    if not Piece.pos_attacked_by_board(cell_pos[0], cell_pos[1], board):
+    if not ChessPiece.pos_attacked_by_board(cell_pos[0], cell_pos[1], board):
         for piece_id, count in enumerate(stage):
             if count < 1:
                 continue
-            piece = Piece.class_list[piece_id](*cell_pos)
+            piece = ChessPiece.class_list[piece_id](*cell_pos)
             if piece.attacks_board(board):
                 continue
 
@@ -173,7 +173,7 @@ def find_solutions_r(row_count, col_count, count_by_symbol):
     """
     stage = [
         count_by_symbol.get(cls.symbol, 0)
-        for cls in Piece.class_list
+        for cls in ChessPiece.class_list
     ]
     yield from _rec_low(
         row_count,
@@ -210,7 +210,7 @@ def find_solutions_q(row_count, col_count, count_by_symbol):
     cell_count = row_count * col_count
     stage = [
         count_by_symbol.get(cls.symbol, 0)
-        for cls in Piece.class_list
+        for cls in ChessPiece.class_list
     ]
     todo = queue.Queue()
     todo.put((
@@ -233,14 +233,14 @@ def find_solutions_q(row_count, col_count, count_by_symbol):
 
         cell_pos = divmod(cell_num, col_count)
         # cell_pos == (row_num, col_num)
-        if Piece.pos_attacked_by_board(cell_pos[0], cell_pos[1], board):
+        if ChessPiece.pos_attacked_by_board(cell_pos[0], cell_pos[1], board):
             continue
         for piece_id, count in enumerate(stage):
             if count < 1:
                 continue
             if cell_pos in board:
                 continue
-            piece = Piece.class_list[piece_id](*cell_pos)
+            piece = ChessPiece.class_list[piece_id](*cell_pos)
             if piece.attacks_board(board):
                 continue
 

@@ -2,7 +2,7 @@
 """defines classes for different types of chess pieces"""
 
 
-class Piece(object):
+class ChessPiece(object):
     """base class for chess piece / piece type
     should not be instanciated directly
     """
@@ -16,7 +16,7 @@ class Piece(object):
     @classmethod
     def register_class(cls, sub):
         """
-        registers a Piece subclass
+        registers a ChessPiece subclass
         """
         cls.class_by_name[sub.name] = sub
         cls.class_by_symbol[sub.symbol] = sub
@@ -80,8 +80,8 @@ class Piece(object):
         return False
 
 
-@Piece.register_class
-class King(Piece):
+@ChessPiece.register_class
+class King(ChessPiece):
     """King piece/piece class"""
     name = 'king'
     symbol = 'K'
@@ -93,8 +93,8 @@ class King(Piece):
         ) == 1
 
 
-@Piece.register_class
-class Queen(Piece):
+@ChessPiece.register_class
+class Queen(ChessPiece):
     """Queen piece/piece class"""
     name = 'queen'
     symbol = 'Q'
@@ -106,8 +106,8 @@ class Queen(Piece):
                abs(drow) == abs(dcol)
 
 
-@Piece.register_class
-class Bishop(Piece):
+@ChessPiece.register_class
+class Bishop(ChessPiece):
     """Bishop piece/piece class"""
     name = 'bishop'
     symbol = 'B'
@@ -116,8 +116,8 @@ class Bishop(Piece):
         return abs(row_num - self.row_num) == abs(col_num - self.col_num)
 
 
-@Piece.register_class
-class Rook(Piece):
+@ChessPiece.register_class
+class Rook(ChessPiece):
     """Rook piece/piece class"""
     name = 'rook'
     symbol = 'R'
@@ -126,8 +126,8 @@ class Rook(Piece):
         return row_num == self.row_num or col_num == self.col_num
 
 
-@Piece.register_class
-class Knight(Piece):
+@ChessPiece.register_class
+class Knight(ChessPiece):
     """Knight piece/piece class"""
     name = 'knight'
     symbol = 'N'
