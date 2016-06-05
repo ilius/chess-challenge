@@ -24,6 +24,8 @@ class Unit(object):
         sub.cid = len(cls.class_list)
         cls.class_list.append(sub)
 
+        return sub
+
     def __init__(self, row_num, col_num):
         """
         row_num: row number, starting from 0
