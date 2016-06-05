@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
-"""defines classes for different types of chess units / pieces"""
+"""defines classes for different types of chess pieces"""
 
 
-class Unit(object):
-    """base class for chess unit / piece type
+class Piece(object):
+    """base class for chess piece / piece type
     should not be instanciated directly
     """
     name = ''
@@ -16,7 +16,7 @@ class Unit(object):
     @classmethod
     def register_class(cls, sub):
         """
-        registers a Unit subclass
+        registers a Piece subclass
         """
         cls.class_by_name[sub.name] = sub
         cls.class_by_symbol[sub.symbol] = sub
@@ -34,7 +34,7 @@ class Unit(object):
         self.set_pos(row_num, col_num)
 
     def set_pos(self, row_num, col_num):
-        """set position of unit
+        """set position of piece
 
         row_num: row number, starting from 0
         col_num: column number, starting from 0
@@ -47,18 +47,18 @@ class Unit(object):
         return (self.row_num, self.col_num)
 
     def attacks_pos(self, row_num, col_num):
-        """check if this unit can attck (threatens) the given position"""
+        """check if this piece can attck (threatens) the given position"""
         raise NotImplementedError
 
-    def attacks_unit(self, other):
-        """check if this unit can attck (threatens) the given unit object"""
+    def attacks_piece(self, other):
+        """check if this piece can attck (threatens) the given piece object"""
         return self.attacks_pos(other.row_num, other.col_num)
 
     def attacks_board(self, board):
-        """check if this unit can attck (threatens) any unit on board
+        """check if this piece can attck (threatens) any piece on board
             return True if it can, False otherwise
 
-        board: a dict { (row_num, col_num) => unit_symbol }
+        board: a dict { (row_num, col_num) => piece_symbol }
         """
         for row_num, col_num in board.keys():
             if self.attacks_pos(row_num, col_num):
@@ -69,7 +69,7 @@ class Unit(object):
     @classmethod
     def pos_attacked_by_board(cls, row_num, col_num, board):
         """
-        check if any unit on given `board` can attck (threatens) the given
+        check if any piece on given `board` can attck (threatens) the given
         position (row_num, col_num)
         """
         for (brow_num, bcol_num), symbol in board.items():
@@ -80,9 +80,9 @@ class Unit(object):
         return False
 
 
-@Unit.register_class
-class King(Unit):
-    """King unit/piece class"""
+@Piece.register_class
+class King(Piece):
+    """King piece/piece class"""
     name = 'king'
     symbol = 'K'
 
@@ -93,9 +93,9 @@ class King(Unit):
         ) == 1
 
 
-@Unit.register_class
-class Queen(Unit):
-    """Queen unit/piece class"""
+@Piece.register_class
+class Queen(Piece):
+    """Queen piece/piece class"""
     name = 'queen'
     symbol = 'Q'
 
@@ -106,9 +106,9 @@ class Queen(Unit):
                abs(drow) == abs(dcol)
 
 
-@Unit.register_class
-class Bishop(Unit):
-    """Bishop unit/piece class"""
+@Piece.register_class
+class Bishop(Piece):
+    """Bishop piece/piece class"""
     name = 'bishop'
     symbol = 'B'
 
@@ -116,9 +116,9 @@ class Bishop(Unit):
         return abs(row_num - self.row_num) == abs(col_num - self.col_num)
 
 
-@Unit.register_class
-class Rook(Unit):
-    """Rook unit/piece class"""
+@Piece.register_class
+class Rook(Piece):
+    """Rook piece/piece class"""
     name = 'rook'
     symbol = 'R'
 
@@ -126,9 +126,9 @@ class Rook(Unit):
         return row_num == self.row_num or col_num == self.col_num
 
 
-@Unit.register_class
-class Knight(Unit):
-    """Knight unit/piece class"""
+@Piece.register_class
+class Knight(Piece):
+    """Knight piece/piece class"""
     name = 'knight'
     symbol = 'N'
 

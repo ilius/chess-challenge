@@ -5,14 +5,14 @@ import sys
 from time import time as now
 import random
 
-from units import Unit
+from pieces import Piece
 from solution import (
     find_solutions_s,
     find_solutions_r,
     find_solutions_q,
 )
 
-UNIT_SYMBOLS = 'KQBRN'  # must not re-order
+PIECE_SYMBOLS = 'KQBRN'  # must not re-order
 
 
 def input_int(prompt, default=None, minimum=None, maximum=None):
@@ -49,10 +49,10 @@ def input_int(prompt, default=None, minimum=None, maximum=None):
         return value
 
 
-def input_units_count(row_count, col_count):
+def input_pieces_count(row_count, col_count):
     """
-    ask the user the number or chess units / pieces of each type
-    return a dict { unit_symbol => count }
+    ask the user the number or chess pieces of each type
+    return a dict { piece_symbol => count }
 
     row_count: number of rows
     col_count: number of columns
@@ -60,8 +60,8 @@ def input_units_count(row_count, col_count):
     cell_count = row_count * col_count
     count_by_symbol = {}
     total_count = 0
-    for symbol in UNIT_SYMBOLS:
-        cls = Unit.class_by_symbol[symbol]
+    for symbol in PIECE_SYMBOLS:
+        cls = Piece.class_by_symbol[symbol]
         plural_name = cls.name.capitalize() + 's'
         count = input_int(
             'Number of %s: ' % plural_name,
@@ -78,7 +78,7 @@ def format_board(board, row_count, col_count):
     """
     convert a `board` into string than can be shown in console
 
-    board: a dict { (row_num, col_num) => unit_symbol }
+    board: a dict { (row_num, col_num) => piece_symbol }
     row_count: number of rows
     col_count: number of columns
     """
@@ -103,24 +103,24 @@ def make_random_board(row_count, col_count, density=0.5):
             factor = random.random() / density
             if factor >= 1:
                 continue
-            index = int(factor * len(Unit.class_list))
-            board[(row_num, col_num)] = Unit.class_list[index].symbol
+            index = int(factor * len(Piece.class_list))
+            board[(row_num, col_num)] = Piece.class_list[index].symbol
     return board
 
 
 def input_problem():
     """
-    get the board size and units count from stdin or command line arguments
+    get the board size and pieces count from stdin or command line arguments
     """
-    if len(sys.argv) == 3 + len(Unit.class_list):
+    if len(sys.argv) == 3 + len(Piece.class_list):
         row_count = int(sys.argv[1])
         col_count = int(sys.argv[2])
         count_by_symbol = {}
         print('Number of rows: %s' % row_count)
         print('Number of columns: %s' % col_count)
         print()
-        for index, symbol in enumerate(UNIT_SYMBOLS):
-            cls = Unit.class_by_symbol[symbol]
+        for index, symbol in enumerate(PIECE_SYMBOLS):
+            cls = Piece.class_by_symbol[symbol]
             count_by_symbol[cls.symbol] = int(sys.argv[3+index])
             print('Number of %ss: %s' % (
                 cls.name.capitalize(),
@@ -130,7 +130,7 @@ def input_problem():
         row_count = input_int('Number of rows: ', minimum=2)
         col_count = input_int('Number of columns: ', minimum=2)
         print()
-        count_by_symbol = input_units_count(row_count, col_count)
+        count_by_symbol = input_pieces_count(row_count, col_count)
 
     return row_count, col_count, count_by_symbol
 
@@ -147,14 +147,14 @@ def mark_board_under_attack_cells(board, row_count, col_count, symbol='.'):
             try:
                 new_board[(row_num, col_num)] = board[(row_num, col_num)]
             except KeyError:
-                if Unit.pos_attacked_by_board(row_num, col_num, board):
+                if Piece.pos_attacked_by_board(row_num, col_num, board):
                     new_board[(row_num, col_num)] = symbol
     return new_board
 
 
 def show_all_confs(under_attack_symbol=''):
     """
-    ask the board size and units count
+    ask the board size and pieces count
     calculate and show all possible unique configuration
     """
     row_count, col_count, count_by_symbol = input_problem()
@@ -185,10 +185,10 @@ def test_input_int():
     ))
 
 
-def test_input_units_count(row_count, col_count):
-    """test `input_units_count` function"""
-    count_by_symbol = input_units_count(row_count, col_count)
-    assert set(count_by_symbol.keys()) == set(Unit.class_by_symbol.keys())
+def test_input_pieces_count(row_count, col_count):
+    """test `input_pieces_count` function"""
+    count_by_symbol = input_pieces_count(row_count, col_count)
+    assert set(count_by_symbol.keys()) == set(Piece.class_by_symbol.keys())
     for count in count_by_symbol.values():
         assert isinstance(count, int)
         assert count >= 0
