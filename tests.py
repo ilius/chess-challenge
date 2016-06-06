@@ -16,6 +16,7 @@ from pieces import (
 
 
 class ChessPieceTest(unittest.TestCase):
+    """test case for ChessPiece class"""
     def test_set_pos(self):
         """
         test method for ChessPiece.set_pos and ChessPiece.get_pos methods
@@ -76,6 +77,7 @@ class ChessPieceTest(unittest.TestCase):
 
 
 class KingTest(unittest.TestCase):
+    """test case for King class"""
     def test_attacks_1(self):
         """
         test method for King.attacks_pos method
@@ -97,6 +99,7 @@ class KingTest(unittest.TestCase):
 
 
 class QueenTest(unittest.TestCase):
+    """test case for Queen class"""
     def test_attacks_1(self):
         """
         test method for Queen.attacks_pos method
@@ -122,6 +125,7 @@ class QueenTest(unittest.TestCase):
 
 
 class BishopTest(unittest.TestCase):
+    """test case for Bishop class"""
     def test_attacks_1(self):
         """
         test method for Bishop.attacks_pos method
@@ -139,6 +143,7 @@ class BishopTest(unittest.TestCase):
 
 
 class RookTest(unittest.TestCase):
+    """test case for Rook class"""
     def test_attacks_1(self):
         """
         test method for Rook.attacks_pos method
@@ -155,6 +160,7 @@ class RookTest(unittest.TestCase):
 
 
 class KnightTest(unittest.TestCase):
+    """test case for Knight class"""
     def test_attacks_1(self):
         """
         test method for Knight.attacks_pos method
