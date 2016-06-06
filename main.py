@@ -3,6 +3,7 @@
 
 import sys
 from time import time as now
+import argparse
 import random
 
 from pieces import ChessPiece
@@ -212,6 +213,59 @@ def interactive_main(under_attack_symbol=''):
         col_count,
     )
 
+def argparse_main():
+    parser = argparse.ArgumentParser(add_help=True)
+    parser.add_argument(
+        action='store',
+        dest='row_count',
+        type=int,
+        help='number of rows in the board',
+    )
+    parser.add_argument(
+        action='store',
+        dest='col_count',
+        type=int,
+        help='number of columns in the board',
+    )
+    parser.add_argument(
+        '-c',
+        '--count',
+        dest='count_enable',
+        action='store_true',
+        default=False,
+        help='only count the number of unique configurations, don\'t show them',
+    )
+
+    for cls in ChessPiece.class_list:
+        plural_name = cls.name + 's'
+        parser.add_argument(
+            '-' + cls.symbol.lower(),
+            '--' + plural_name,
+            dest=cls.name,
+            type=int,
+            default=0,
+            help='number of %s'%plural_name
+        )
+
+    args = parser.parse_args()
+
+    count_by_symbol = {
+        cls.symbol: getattr(args, cls.name, 0)
+        for cls in ChessPiece.class_list
+    }
+
+    gen = find_solutions_s(
+        args.row_count,
+        args.col_count,
+        count_by_symbol,
+    )
+    count_or_show_by_generator(
+        gen,
+        args.count_enable,
+        args.row_count,
+        args.col_count,
+    )
+
 
 def test_input_int():
     """test `input_int` function"""
@@ -341,5 +395,8 @@ def chess_challenge_no_input():
 
 
 if __name__ == '__main__':
-    interactive_main()
+    if len(sys.argv) > 1:
+        argparse_main()
+    else:
+        interactive_main()
     #  chess_challenge_no_input()
