@@ -11,6 +11,11 @@ Or simply
     ./main.py --help
 
 
+To use interactive command line interface, just run it without any arguments / options:
+
+    python3 main.py
+
+
 Examples
 --------
 
