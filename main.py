@@ -1,5 +1,9 @@
 #!/usr/bin/env python3
-"""responsible for calling other modules and interacting with user"""
+"""
+responsible for calling other modules and interacting with user
+To solve the challenge problem, run:
+    ./main.py --count 7 7 -k2 -q2 -b2 -n1
+"""
 
 import sys
 from time import time as now
@@ -212,6 +216,8 @@ def argparse_main():
     )
 
 
+############################ Test Functions ############################
+
 def test_input_int():
     """test `input_int` function"""
     print(input_int('Enter an integer: '))
@@ -309,39 +315,8 @@ def compare_find_solutions_time():
         print('%.4f seconds   (%s)' % (delta, func))
 
 
-def chess_challenge_no_input():
-    """
-    solves the probem for the exact parameters given in the challange
-    prints out the number of unique configuration, and running time
-    """
-    row_count = 7
-    col_count = 7
-    count_by_symbol = {
-        'K': 2,
-        'Q': 2,
-        'B': 2,
-        'R': 0,
-        'N': 1,
-    }
-
-    count = 0
-    tm0 = now()
-    count = sum(1 for _ in find_solutions_s(
-        row_count,
-        col_count,
-        count_by_symbol,
-    ))
-    delta = now() - tm0
-
-    print('Number of Unique Configurations: %s' % solution_count)
-    print('Running Time: %.4f seconds' % delta)
-
-
-
-
 if __name__ == '__main__':
     if len(sys.argv) > 1:
         argparse_main()
     else:
         interactive_main()
-    #  chess_challenge_no_input()
