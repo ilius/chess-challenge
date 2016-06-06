@@ -96,15 +96,13 @@ def find_solutions_s(row_count, col_count, count_by_symbol):
                 ))
 
 
-def _rec_low(
-    row_count,
-    col_count,
-    board,
-    stage,
-    stage_size,
-    cell_num,
-    last_piece,
-):
+def _rec_low(row_count,
+             col_count,
+             board,
+             stage,
+             stage_size,
+             cell_num,
+             last_piece):
     #   `stage` is a list containing count or each piece type:
     #       [king_count, queen_count, bishop_count, rook_count, knight_count]
     #   `cell_num` is an int resulting from `row_num * col_count + col_num`
