@@ -18,7 +18,7 @@ from pieces import (
 class ChessPieceTest(unittest.TestCase):
     def test_set_pos(self):
         """
-        test case for ChessPiece.set_pos and ChessPiece.get_pos methods
+        test method for ChessPiece.set_pos and ChessPiece.get_pos methods
         """
         piece = ChessPiece(3, 4)
         self.assertEqual(piece.get_pos(), (3, 4))
@@ -28,7 +28,7 @@ class ChessPieceTest(unittest.TestCase):
 
     def test_pos_attacked_by_board(self):
         """
-        test case for ChessPiece.pos_attacked_by_board class method
+        test method for ChessPiece.pos_attacked_by_board class method
         test board:
         ---------------------
         | Q | . | . | . | K |
@@ -78,7 +78,7 @@ class ChessPieceTest(unittest.TestCase):
 class KingTest(unittest.TestCase):
     def test_attacks_1(self):
         """
-        test case for King.attacks_pos method
+        test method for King.attacks_pos method
         """
         king = King(5, 5)
 
@@ -99,7 +99,7 @@ class KingTest(unittest.TestCase):
 class QueenTest(unittest.TestCase):
     def test_attacks_1(self):
         """
-        test case for Queen.attacks_pos method
+        test method for Queen.attacks_pos method
         """
         queen = Queen(5, 5)
 
@@ -124,7 +124,7 @@ class QueenTest(unittest.TestCase):
 class BishopTest(unittest.TestCase):
     def test_attacks_1(self):
         """
-        test case for Bishop.attacks_pos method
+        test method for Bishop.attacks_pos method
         """
         bishop = Bishop(5, 5)
 
@@ -141,7 +141,7 @@ class BishopTest(unittest.TestCase):
 class RookTest(unittest.TestCase):
     def test_attacks_1(self):
         """
-        test case for Rook.attacks_pos method
+        test method for Rook.attacks_pos method
         """
         rook = Rook(5, 5)
 
@@ -157,7 +157,7 @@ class RookTest(unittest.TestCase):
 class KnightTest(unittest.TestCase):
     def test_attacks_1(self):
         """
-        test case for Knight.attacks_pos method
+        test method for Knight.attacks_pos method
         """
         knight = Knight(5, 5)
 
