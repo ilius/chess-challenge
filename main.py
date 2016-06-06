@@ -180,9 +180,13 @@ def interactive_main(under_attack_symbol=''):
     )
 
     if count_enable:
-        print('Calculating, please wait...')
+        print('Calculating, please wait... (Control+C to cancel)')
         tm0 = now()
-        solution_count = sum(1 for _ in gen)
+        try:
+            solution_count = sum(1 for _ in gen)
+        except KeyboardInterrupt:
+            print('\nGoodbye')
+            return
         delta = now() - tm0
         print('Number of Unique Configurations: %s' % solution_count)
         print('Running Time: %.4f seconds' % delta)
@@ -190,7 +194,12 @@ def interactive_main(under_attack_symbol=''):
         print('Found Configurations:\n')
         for board in gen:
             print(format_board(board, row_count, col_count))
-            input('Press Enter to see the next')
+            try:
+                input('Press Enter to see the next, Control+C to exit')
+            except KeyboardInterrupt:
+                print('\nGoodbye')
+                break
+
 
 def test_input_int():
     """test `input_int` function"""
