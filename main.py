@@ -12,67 +12,12 @@ from solution import (
     find_solutions_r,
     find_solutions_q,
 )
+from cmd_util import (
+    input_int,
+    input_yesno,
+)
 
 PIECE_SYMBOLS = 'KQBRN'  # must not re-order
-
-
-def input_int(prompt, default=None, minimum=None, maximum=None):
-    """
-    ask the user to enter an integer number
-    make sure it's an integer, and within possibly given criteria
-    default: default value (if the user leaves it empty)
-             if default is None, user can not leave it empty
-    minimum: minimum allowed value, or None
-    maximum: maximum allowed value, or None
-    """
-    while True:
-        value_str = input(prompt).strip()
-        if not value_str:
-            if default is None:
-                print('Can not leave empty')
-                continue
-            else:
-                return default
-        try:
-            value = int(value_str)
-        except ValueError:
-            print('Must enter an integer number')
-            continue
-
-        if minimum is not None and value < minimum:
-            print('Must enter greater than or equal to %s' % minimum)
-            continue
-
-        if maximum is not None and value > maximum:
-            print('Must enter less than or equal to %s' % maximum)
-            continue
-
-        return value
-
-
-def input_yesno(prompt, default=None):
-    """
-    ask the user to enter Yes or No
-
-    prompt: string to be shown as prompt
-    default: True (=Yes), False (=No), or None (can not leave empty)
-    """
-    while True:
-        value = input(prompt).strip()
-        if not value:
-            if default is None:
-                print('Can not leave empty')
-                continue
-            else:
-                return default
-        value = value.lower()
-        if value in ('y', 'yes'):
-            return True
-
-        if value in ('n', 'no'):
-            return False
-
-        print('Enter Yes or No')
 
 
 def input_pieces_count(row_count, col_count):
