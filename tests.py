@@ -14,6 +14,11 @@ from pieces import (
     Knight,
 )
 
+from solution import (
+    find_solutions_s,
+    find_solutions_r,
+)
+
 
 class ChessPieceTest(unittest.TestCase):
     """test case for ChessPiece class"""
@@ -173,6 +178,86 @@ class KnightTest(unittest.TestCase):
         self.assertFalse(knight.attacks_pos(5, 4))
         self.assertFalse(knight.attacks_pos(0, 5))
         self.assertFalse(knight.attacks_pos(4, 4))
+
+
+class SolutionCountTest(unittest.TestCase):
+    """
+    test case for counting unique solutions / configurations
+    using both stack and recursive implementations
+    (queue implementation is too slow, so we don't bother)
+    """
+    def check_count(self, solution_count, *args):
+        """
+        solution_count: known count of unique solutions / configurations
+        the rest of arguments (*args) are given to find_solutions_s
+            and find_solutions_r functions
+
+        calls TestCase.assertEqual for both stack and recursive implementations
+        """
+        self.assertEqual(
+            sum(1 for _ in find_solutions_s(*args)),  # 's' for stack
+            solution_count,
+        )
+        self.assertEqual(
+            sum(1 for _ in find_solutions_r(*args)),  # 'r' for recursive
+            solution_count,
+        )
+
+    def test_count_1(self):
+        self.check_count(
+            16,  # solution count
+            3,  # row count
+            3,  # column count
+            {'K': 2},
+        )
+
+    def test_count_2(self):
+        self.check_count(
+            78,  # solution count
+            4,  # row count
+            4,  # column count
+            {'K': 2},
+        )
+
+    def test_count_3(self):
+        self.check_count(
+            128,  # solution count
+            4,  # row count
+            4,  # column count
+            {'K': 2, 'Q': 1},
+        )
+
+    def test_count_4(self):
+        self.check_count(
+            104,  # solution count
+            4,  # row count
+            4,  # column count
+            {'K': 2, 'Q': 1, 'B': 1},
+        )
+
+    def test_count_5(self):
+        self.check_count(
+            0,  # solution count
+            4,  # row count
+            4,  # column count
+            {'K': 2, 'Q': 1, 'B': 1, 'R': 1},
+        )
+
+    def test_count_6(self):
+        self.check_count(
+            32,  # solution count
+            4,  # row count
+            4,  # column count
+            {'K': 2, 'Q': 1, 'B': 1, 'N': 1},
+        )
+
+    def test_count_7(self):
+        self.check_count(
+            12,  # solution count
+            4,  # row count
+            4,  # column count
+            {'K': 3, 'N': 3},
+        )
 
 
 if __name__ == '__main__':
