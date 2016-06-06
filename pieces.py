@@ -3,7 +3,7 @@
 
 
 class ChessPiece(object):
-    """base class for chess piece / piece type
+    """base class for chess piece type
     should not be instanciated directly
     """
     name = ''
@@ -82,7 +82,7 @@ class ChessPiece(object):
 
 @ChessPiece.register_class
 class King(ChessPiece):
-    """King piece/piece class"""
+    """King piece class"""
     name = 'king'
     symbol = 'K'
 
@@ -95,7 +95,7 @@ class King(ChessPiece):
 
 @ChessPiece.register_class
 class Queen(ChessPiece):
-    """Queen piece/piece class"""
+    """Queen piece class"""
     name = 'queen'
     symbol = 'Q'
 
@@ -108,7 +108,7 @@ class Queen(ChessPiece):
 
 @ChessPiece.register_class
 class Bishop(ChessPiece):
-    """Bishop piece/piece class"""
+    """Bishop piece class"""
     name = 'bishop'
     symbol = 'B'
 
@@ -118,7 +118,7 @@ class Bishop(ChessPiece):
 
 @ChessPiece.register_class
 class Rook(ChessPiece):
-    """Rook piece/piece class"""
+    """Rook piece class"""
     name = 'rook'
     symbol = 'R'
 
@@ -128,7 +128,7 @@ class Rook(ChessPiece):
 
 @ChessPiece.register_class
 class Knight(ChessPiece):
-    """Knight piece/piece class"""
+    """Knight piece class"""
     name = 'knight'
     symbol = 'N'
 
