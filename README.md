@@ -1,4 +1,10 @@
 
+Requirements
+------------
+
+This program only requires **Python 3.3 or any later version**, and does not use any external library
+
+
 Command Line Usage
 -------------------
 
