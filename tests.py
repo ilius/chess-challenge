@@ -26,6 +26,54 @@ class ChessPieceTest(unittest.TestCase):
         piece.set_pos(6, 5)
         self.assertEqual(piece.get_pos(), (6, 5))
 
+    def test_pos_attacked_by_board(self):
+        """
+        test case for ChessPiece.pos_attacked_by_board class method
+        test board:
+        ---------------------
+        | Q | . | . | . | K |
+        ---------------------
+        | . | . | . | . | . |
+        ---------------------
+        | . | . | . | . | R |
+        ---------------------
+        | B |   | . | . | . |
+        ---------------------
+        | . | . |   |   | N |
+        ---------------------
+        """
+        row_count = 5
+        col_count = 5
+        board = {
+            (0, 0): 'Q',
+            (0, 4): 'K',
+            (2, 4): 'R',
+            (3, 0): 'B',
+            (4, 4): 'N',
+        }
+
+        self.assertTrue(ChessPiece.pos_attacked_by_board(0, 1, board))
+        self.assertTrue(ChessPiece.pos_attacked_by_board(0, 2, board))
+        self.assertTrue(ChessPiece.pos_attacked_by_board(0, 3, board))
+        self.assertTrue(ChessPiece.pos_attacked_by_board(1, 0, board))
+        self.assertTrue(ChessPiece.pos_attacked_by_board(1, 1, board))
+        self.assertTrue(ChessPiece.pos_attacked_by_board(1, 2, board))
+        self.assertTrue(ChessPiece.pos_attacked_by_board(1, 3, board))
+        self.assertTrue(ChessPiece.pos_attacked_by_board(1, 4, board))
+        self.assertTrue(ChessPiece.pos_attacked_by_board(2, 0, board))
+        self.assertTrue(ChessPiece.pos_attacked_by_board(2, 1, board))
+        self.assertTrue(ChessPiece.pos_attacked_by_board(2, 2, board))
+        self.assertTrue(ChessPiece.pos_attacked_by_board(2, 3, board))
+        self.assertFalse(ChessPiece.pos_attacked_by_board(3, 1, board))
+        self.assertTrue(ChessPiece.pos_attacked_by_board(3, 2, board))
+        self.assertTrue(ChessPiece.pos_attacked_by_board(3, 3, board))
+        self.assertTrue(ChessPiece.pos_attacked_by_board(3, 4, board))
+        self.assertTrue(ChessPiece.pos_attacked_by_board(4, 0, board))
+        self.assertTrue(ChessPiece.pos_attacked_by_board(4, 1, board))
+        self.assertFalse(ChessPiece.pos_attacked_by_board(4, 2, board))
+        self.assertFalse(ChessPiece.pos_attacked_by_board(4, 3, board))
+
+
 
 class KingTest(unittest.TestCase):
     def test_attacks_1(self):
