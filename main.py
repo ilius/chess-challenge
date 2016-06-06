@@ -285,8 +285,11 @@ def chess_challenge_no_input():
 
     count = 0
     tm0 = now()
-    for _ in find_solutions_s(row_count, col_count, count_by_symbol):
-        count += 1
+    count = sum(1 for _ in find_solutions_s(
+        row_count,
+        col_count,
+        count_by_symbol,
+    ))
     delta = now() - tm0
 
     print('%s unique configurations' % count)
