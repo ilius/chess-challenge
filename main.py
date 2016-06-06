@@ -188,7 +188,8 @@ def test_input_int():
 def test_input_pieces_count(row_count, col_count):
     """test `input_pieces_count` function"""
     count_by_symbol = input_pieces_count(row_count, col_count)
-    assert set(count_by_symbol.keys()) == set(ChessPiece.class_by_symbol.keys())
+    assert set(count_by_symbol.keys()) == \
+        set(ChessPiece.class_by_symbol.keys())
     for count in count_by_symbol.values():
         assert isinstance(count, int)
         assert count >= 0
@@ -266,6 +267,7 @@ def compare_find_solutions_time():
         time_list.append(delta)
         print('%.4f seconds   (%s)' % (delta, func))
 
+
 def chess_challenge_no_input():
     """
     solves the probem for the exact parameters given in the challange
@@ -287,9 +289,8 @@ def chess_challenge_no_input():
         count += 1
     delta = now() - tm0
 
-    print('%s unique configurations'%count)
+    print('%s unique configurations' % count)
     print('%.4f seconds' % delta)
-
 
 
 if __name__ == '__main__':
