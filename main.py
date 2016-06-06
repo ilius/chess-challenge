@@ -110,27 +110,12 @@ def make_random_board(row_count, col_count, density=0.5):
 
 def input_problem():
     """
-    get the board size and pieces count from stdin or command line arguments
+    get the board size and pieces count from stdin
     """
-    if len(sys.argv) == 3 + len(ChessPiece.class_list):
-        row_count = int(sys.argv[1])
-        col_count = int(sys.argv[2])
-        count_by_symbol = {}
-        print('Number of rows: %s' % row_count)
-        print('Number of columns: %s' % col_count)
-        print()
-        for index, symbol in enumerate(PIECE_SYMBOLS):
-            cls = ChessPiece.class_by_symbol[symbol]
-            count_by_symbol[cls.symbol] = int(sys.argv[3+index])
-            print('Number of %ss: %s' % (
-                cls.name.capitalize(),
-                count_by_symbol[cls.symbol],
-            ))
-    else:
-        row_count = input_int('Number of rows: ', minimum=2)
-        col_count = input_int('Number of columns: ', minimum=2)
-        print()
-        count_by_symbol = input_pieces_count(row_count, col_count)
+    row_count = input_int('Number of rows: ', minimum=2)
+    col_count = input_int('Number of columns: ', minimum=2)
+    print()
+    count_by_symbol = input_pieces_count(row_count, col_count)
 
     return row_count, col_count, count_by_symbol
 
@@ -152,7 +137,7 @@ def mark_board_under_attack_cells(board, row_count, col_count, symbol='.'):
     return new_board
 
 
-def show_all_confs(under_attack_symbol=''):
+def interactive_main(under_attack_symbol=''):
     """
     ask the board size and pieces count
     calculate and show all possible unique configuration
@@ -299,5 +284,5 @@ def chess_challenge_no_input():
 
 
 if __name__ == '__main__':
-    show_all_confs()
+    interactive_main()
     #  chess_challenge_no_input()
