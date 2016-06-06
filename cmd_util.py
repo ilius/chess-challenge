@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """contains utility functions for a command line interface"""
 
+
 def input_int(prompt, default=None, minimum=None, maximum=None):
     """
     ask the user to enter an integer number

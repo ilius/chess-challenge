@@ -162,6 +162,7 @@ def interactive_main(under_attack_symbol=''):
         col_count,
     )
 
+
 def argparse_main():
     parser = argparse.ArgumentParser(add_help=True)
     parser.add_argument(
@@ -182,7 +183,8 @@ def argparse_main():
         dest='count_enable',
         action='store_true',
         default=False,
-        help='only count the number of unique configurations, don\'t show them',
+        help='only count the number of unique configurations, '
+             'don\'t show them',
     )
 
     for cls in ChessPiece.class_list:
@@ -193,7 +195,7 @@ def argparse_main():
             dest=cls.name,
             type=int,
             default=0,
-            help='number of %s'%plural_name
+            help='number of %s' % plural_name
         )
 
     args = parser.parse_args()
@@ -215,8 +217,8 @@ def argparse_main():
         args.col_count,
     )
 
+# ______________________ Test Functions ______________________ #
 
-############################ Test Functions ############################
 
 def test_input_pieces_count(row_count, col_count):
     """test `input_pieces_count` function"""
