@@ -218,20 +218,6 @@ def argparse_main():
 
 ############################ Test Functions ############################
 
-def test_input_int():
-    """test `input_int` function"""
-    print(input_int('Enter an integer: '))
-    print(input_int('Enter an integer (default=0): ', default=0))
-    print(input_int('Enter an integer (>= 3): ', minimum=3))
-    print(input_int('Enter an integer (<= 9): ', maximum=9))
-    print(input_int(
-        'Enter a number (0-99, default 40):',
-        default=40,
-        minimum=0,
-        maximum=99,
-    ))
-
-
 def test_input_pieces_count(row_count, col_count):
     """test `input_pieces_count` function"""
     count_by_symbol = input_pieces_count(row_count, col_count)
