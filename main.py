@@ -292,8 +292,10 @@ def chess_challenge_no_input():
     ))
     delta = now() - tm0
 
-    print('%s unique configurations' % count)
-    print('%.4f seconds' % delta)
+    print('Number of Unique Configurations: %s' % solution_count)
+    print('Running Time: %.4f seconds' % delta)
+
+
 
 
 if __name__ == '__main__':
