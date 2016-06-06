@@ -162,23 +162,11 @@ def mark_board_under_attack_cells(board, row_count, col_count, symbol='.'):
     return new_board
 
 
-def interactive_main(under_attack_symbol=''):
+def count_or_show_by_generator(gen, count_enable, row_count, col_count):
     """
-    ask the board size and pieces count
-    calculate and show all possible unique configuration
+    gen: a generator returned by find_solutions_*
+    count_enable: bool, only count solutions/configurations, don't show them
     """
-    row_count, col_count, count_by_symbol = input_problem()
-    count_enable = input_yesno(
-        'Count configurations? [Yes/No] ',
-        default=True,
-    )
-
-    gen = find_solutions_s(
-        row_count,
-        col_count,
-        count_by_symbol,
-    )
-
     if count_enable:
         print('Calculating, please wait... (Control+C to cancel)')
         tm0 = now()
@@ -199,6 +187,30 @@ def interactive_main(under_attack_symbol=''):
             except KeyboardInterrupt:
                 print('\nGoodbye')
                 break
+
+
+def interactive_main(under_attack_symbol=''):
+    """
+    ask the board size and pieces count
+    calculate and show all possible unique configurations
+    or just count unique configurations depending on user input
+    """
+    row_count, col_count, count_by_symbol = input_problem()
+    count_enable = input_yesno(
+        'Count configurations? [Yes/No] ',
+        default=True,
+    )
+    gen = find_solutions_s(
+        row_count,
+        col_count,
+        count_by_symbol,
+    )
+    count_or_show_by_generator(
+        gen,
+        count_enable,
+        row_count,
+        col_count,
+    )
 
 
 def test_input_int():
