@@ -43,8 +43,8 @@ class ChessPieceTest(unittest.TestCase):
         | . | . |   |   | N |
         ---------------------
         """
-        row_count = 5
-        col_count = 5
+        #  row_count = 5
+        #  col_count = 5
         board = {
             (0, 0): 'Q',
             (0, 4): 'K',
@@ -73,7 +73,6 @@ class ChessPieceTest(unittest.TestCase):
         self.assertTrue(ChessPiece.pos_attacked_by_board(4, 1, board))
         self.assertFalse(ChessPiece.pos_attacked_by_board(4, 2, board))
         self.assertFalse(ChessPiece.pos_attacked_by_board(4, 3, board))
-
 
 
 class KingTest(unittest.TestCase):
