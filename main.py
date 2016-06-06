@@ -49,6 +49,31 @@ def input_int(prompt, default=None, minimum=None, maximum=None):
         return value
 
 
+def input_yesno(prompt, default=None):
+    """
+    ask the user to enter Yes or No
+
+    prompt: string to be shown as prompt
+    default: True (=Yes), False (=No), or None (can not leave empty)
+    """
+    while True:
+        value = input(prompt).strip()
+        if not value:
+            if default is None:
+                print('Can not leave empty')
+                continue
+            else:
+                return default
+        value = value.lower()
+        if value in ('y', 'yes'):
+            return True
+
+        if value in ('n', 'no'):
+            return False
+
+        print('Enter Yes or No')
+
+
 def input_pieces_count(row_count, col_count):
     """
     ask the user the number or chess pieces of each type
@@ -143,18 +168,29 @@ def interactive_main(under_attack_symbol=''):
     calculate and show all possible unique configuration
     """
     row_count, col_count, count_by_symbol = input_problem()
-    print('Found Configurations:\n')
-    for board in find_solutions_s(row_count, col_count, count_by_symbol):
-        if under_attack_symbol:
-            board = mark_board_under_attack_cells(
-                board,
-                row_count,
-                col_count,
-                under_attack_symbol,
-            )
-        print(format_board(board, row_count, col_count))
-        input('Press enter to see the next')
+    count_enable = input_yesno(
+        'Count configurations? [Yes/No] ',
+        default=True,
+    )
 
+    gen = find_solutions_s(
+        row_count,
+        col_count,
+        count_by_symbol,
+    )
+
+    if count_enable:
+        print('Calculating, please wait...')
+        tm0 = now()
+        solution_count = sum(1 for _ in gen)
+        delta = now() - tm0
+        print('Number of Unique Configurations: %s' % solution_count)
+        print('Running Time: %.4f seconds' % delta)
+    else:
+        print('Found Configurations:\n')
+        for board in gen:
+            print(format_board(board, row_count, col_count))
+            input('Press Enter to see the next')
 
 def test_input_int():
     """test `input_int` function"""
