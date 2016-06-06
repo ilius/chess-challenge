@@ -74,7 +74,7 @@ class ChessPiece(object):
         """
         for (brow_num, bcol_num), symbol in board.items():
             if cls.class_by_symbol[symbol](brow_num, bcol_num)\
-            .attacks_pos(row_num, col_num):
+              .attacks_pos(row_num, col_num):
                 return True
 
         return False
@@ -103,7 +103,7 @@ class Queen(ChessPiece):
         drow = row_num - self.row_num
         dcol = col_num - self.col_num
         return drow is 0 or dcol is 0 or \
-               abs(drow) == abs(dcol)
+            abs(drow) == abs(dcol)
 
 
 @ChessPiece.register_class
