@@ -139,7 +139,7 @@ def count_or_show_by_generator(gen, count_enable, row_count, col_count):
                 break
 
 
-def interactive_main(under_attack_symbol=''):
+def interactive_main():
     """
     ask the board size and pieces count
     calculate and show all possible unique configurations
