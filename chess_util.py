@@ -2,7 +2,6 @@
 contains some chess-related utility functions
 """
 
-import random
 from cmd_util import input_int
 from pieces import ChessPiece
 
@@ -30,6 +29,7 @@ def format_board(board, row_count, col_count):
 
 def make_random_board(row_count, col_count, density=0.5):
     """create a random chess board with given size and density"""
+    import random
     board = {}
     for row_num in range(row_count):
         for col_num in range(col_count):

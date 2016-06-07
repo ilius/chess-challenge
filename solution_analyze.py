@@ -20,7 +20,7 @@ def get_board_int_value(board, row_count, col_count):
     return value
 
 
-def check_board_gen_order_uniqueness(board_iter, row_count, col_count):
+def check_board_iter_order(board_iter, row_count, col_count):
     """
     check the order and uniqueness of a board iterator
     the integer value of board must decrease in each step of iteration

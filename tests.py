@@ -18,7 +18,7 @@ from solution import (
     find_solutions_s,
     find_solutions_r,
 )
-from solution_analyze import check_board_gen_order_uniqueness
+from solution_analyze import check_board_iter_order
 
 
 class ChessPieceTest(unittest.TestCase):
@@ -271,12 +271,9 @@ class SolutionUniquenessTest(unittest.TestCase):
         """
         checks the uniqueness and order of boards by stack implementations
         """
-        for find_solutions in (
-            find_solutions_s,
-            find_solutions_r,
-        ):
+        for find_solutions in (find_solutions_s, find_solutions_r):
             gen = find_solutions(row_count, col_count, count_by_symbol)
-            self.assertTrue(check_board_gen_order_uniqueness(
+            self.assertTrue(check_board_iter_order(
                 gen,
                 row_count,
                 col_count,
