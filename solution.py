@@ -80,14 +80,13 @@ def find_solutions_s(row_count, col_count, count_by_symbol):
             new_board = board.copy()
             new_board[cell_pos] = piece.symbol
 
-            new_stage = list(stage)
-            new_stage[piece_id] -= 1
-
             if stage_size <= 1:  # new_stage empty, new_board complete
                 yield new_board
                 continue
 
             if cell_num < cell_count - (stage_size - 1):
+                new_stage = list(stage)
+                new_stage[piece_id] -= 1
                 tmp_todo.append((
                     new_board,
                     new_stage,
