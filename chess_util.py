@@ -4,6 +4,7 @@ contains some chess-related utility functions
 
 import random
 from cmd_util import input_int
+from pieces import ChessPiece
 
 
 def format_board(board, row_count, col_count):
