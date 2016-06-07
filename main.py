@@ -97,6 +97,13 @@ def argparse_main():
         help='only count the number of unique configurations, '
              'don\'t show them',
     )
+    parser.add_argument(
+        '--recursive',
+        dest='recursive',
+        action='store_true',
+        default=False,
+        help='use recursive implementation instead of stack implementation'
+    )
 
     for cls in ChessPiece.class_list:
         plural_name = cls.name + 's'
@@ -116,7 +123,9 @@ def argparse_main():
         for cls in ChessPiece.class_list
     }
 
-    gen = find_solutions_s(
+    find_solutions = find_solutions_r if args.recursive else find_solutions_s
+
+    gen = find_solutions(
         args.row_count,
         args.col_count,
         count_by_symbol,
