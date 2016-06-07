@@ -95,7 +95,6 @@ def find_solutions_s(row_count, col_count, count_by_symbol):
                     piece,  # the new last_piece
                 ))
         todo += reversed(tmp_todo)
-        tmp_todo = []
 
 
 def _rec_low(row_count,
