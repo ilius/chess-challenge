@@ -128,14 +128,13 @@ def _rec_low(row_count,
             new_board = board.copy()
             new_board[cell_pos] = piece.symbol
 
-            new_stage = list(stage)
-            new_stage[piece_id] -= 1
-
             if stage_size <= 1:  # new_stage empty, new_board complete
                 yield new_board
                 continue
 
             if cell_num < cell_count - (stage_size - 1):
+                new_stage = list(stage)
+                new_stage[piece_id] -= 1
                 yield from _rec_low(
                     row_count,
                     col_count,
