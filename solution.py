@@ -69,6 +69,7 @@ def find_solutions_s(row_count, col_count, count_by_symbol):
             continue
         if ChessPiece.pos_attacked_by_board(cell_pos[0], cell_pos[1], board):
             continue
+        tmp_todo = []
         for piece_id, count in enumerate(stage):
             if count < 1:
                 continue
@@ -87,13 +88,15 @@ def find_solutions_s(row_count, col_count, count_by_symbol):
                 continue
 
             if cell_num < cell_count - (stage_size - 1):
-                todo.append((
+                tmp_todo.append((
                     new_board,
                     new_stage,
                     stage_size - 1,
                     cell_num + 1,
                     piece,  # the new last_piece
                 ))
+        todo += reversed(tmp_todo)
+        tmp_todo = []
 
 
 def _rec_low(row_count,
