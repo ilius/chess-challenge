@@ -80,4 +80,4 @@ def test_input_pieces_count(row_count, col_count):
         print('%s: %s' % (symbol, count))
 
 if __name__ == '__main__':
-    test_input_pieces_count()
+    test_input_pieces_count(7, 7)
