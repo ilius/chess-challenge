@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """contains utility functions for a command line interface"""
 
+import random
 
 def input_int(prompt, default=None, minimum=None, maximum=None):
     """
