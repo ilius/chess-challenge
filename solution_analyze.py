@@ -1,4 +1,8 @@
 #!/usr/bin/env python3
+"""
+contains functions for analyzing or verifying solutions / configurations
+"""
+
 
 from pieces import ChessPiece
 
