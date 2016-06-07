@@ -72,6 +72,9 @@ def interactive_main():
 
 
 def argparse_main():
+    """
+    parses the command line arguments and options, and performs operations
+    """
     parser = argparse.ArgumentParser(add_help=True)
     parser.add_argument(
         action='store',
