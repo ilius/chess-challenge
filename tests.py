@@ -18,6 +18,7 @@ from solution import (
     find_solutions_s,
     find_solutions_r,
 )
+from solution_analyze import check_board_gen_order_uniqueness
 
 
 class ChessPieceTest(unittest.TestCase):
@@ -257,6 +258,49 @@ class SolutionCountTest(unittest.TestCase):
             4,  # row count
             4,  # column count
             {'K': 3, 'N': 3},
+        )
+
+
+class SolutionUniquenessTest(unittest.TestCase):
+    """
+    test case for checking uniqueness of solutions / configurations
+    using both stack and recursive implementations
+    (queue implementation is too slow, so we don't bother)
+    """
+    def check_u_order(self, row_count, col_count, count_by_symbol):
+        """
+        checks the uniqueness and order of boards by stack implementations
+        """
+        for find_solutions in (
+            find_solutions_s,
+            find_solutions_r,
+        ):
+            gen = find_solutions(row_count, col_count, count_by_symbol)
+            self.assertTrue(check_board_gen_order_uniqueness(
+                gen,
+                row_count,
+                col_count,
+            ))
+
+    def test_u_order_1(self):
+        self.check_u_order(
+            4,  # row count
+            4,  # column count
+            {'K': 2, 'Q': 1, 'B': 1, 'N': 1},
+        )
+
+    def test_u_order_2(self):
+        self.check_u_order(
+            5,  # row count
+            5,  # column count
+            {'K': 2, 'Q': 1, 'B': 1, 'N': 1},
+        )
+
+    def test_u_order_3(self):
+        self.check_u_order(
+            5,  # row count
+            5,  # column count
+            {'K': 2, 'Q': 1, 'B': 1, 'R': 1, 'N': 2},
         )
 
 
