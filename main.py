@@ -56,7 +56,7 @@ def interactive_main():
     row_count, col_count, count_by_symbol = input_problem()
     count_enable = input_yesno(
         'Count configurations? [Yes/No] ',
-        default=True,
+        default=False,
     )
     gen = find_solutions_s(
         row_count,
